@@ -1,17 +1,19 @@
 package com.example.TaskSparrowBackend.Models;
 
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Data;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
-@Table(name = "technical_specialist")
-public class TechnicalSpecialist {
-	
+@Data
+@Table(name = "dispatcher")
+public class Dispatcher {
 	@Id
 	@Column(name = "id",nullable = false,unique = true)
 	private UUID ID;
@@ -21,25 +23,23 @@ public class TechnicalSpecialist {
 	private String email;
 	@Column(name="password",nullable = false)
 	private String password;
-	@Column(name = "last_name")
+	@Column(name = "last_name",nullable = false)
 	private String lastName;
-	@Column(name = "first_name")
+	@Column(name = "first_name",nullable = false)
 	private String firstName;
 	
-	@Column(name = "date_of_birth")
+	@Column(name = "date_of_birth",nullable = false)
 	private LocalDate dateOfBirth;
 	@Column(name = "nationality")
 	private String nationality;
-	@Column(name = "phone_number")
+	@Column(name = "phone_number",nullable = false)
 	private String phoneNumber;
 	
-	@Column(name = "role")
-	private String role;
 	
-	public TechnicalSpecialist() {
+	public Dispatcher() {
 	}
 	
-	public TechnicalSpecialist( UUID ID, String userName, String email, String password, String lastName, String firstName, LocalDate dateOfBirth, String nationality, String role, String phoneNumber ) {
+	public Dispatcher( UUID ID, String userName, String email, String password, String lastName, String firstName, LocalDate dateOfBirth, String nationality, String phoneNumber ) {
 		this.ID = ID;
 		this.userName = userName;
 		this.email = email;
@@ -48,7 +48,6 @@ public class TechnicalSpecialist {
 		this.firstName = firstName;
 		this.dateOfBirth = dateOfBirth;
 		this.nationality = nationality;
-		this.role = role;
 		this.phoneNumber = phoneNumber;
 	}
 	
@@ -116,14 +115,6 @@ public class TechnicalSpecialist {
 		this.nationality = nationality;
 	}
 	
-	public String getRole() {
-		return role;
-	}
-	
-	public void setRole( String role ) {
-		this.role = role;
-	}
-	
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
@@ -132,10 +123,9 @@ public class TechnicalSpecialist {
 		this.phoneNumber = phoneNumber;
 	}
 	
-	
 	@Override
 	public String toString() {
-		return "TechnicalSpecialist{" +
+		return "RegisteredUser{" +
 				"ID=" + ID +
 				", userName='" + userName + '\'' +
 				", email='" + email + '\'' +
@@ -144,8 +134,9 @@ public class TechnicalSpecialist {
 				", firstName='" + firstName + '\'' +
 				", dateOfBirth='" + dateOfBirth + '\'' +
 				", nationality='" + nationality + '\'' +
-				", role='" + role + '\'' +
 				", phoneNumber=" + phoneNumber +
 				'}';
 	}
+	
+	
 }

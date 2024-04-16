@@ -1,12 +1,12 @@
 package com.example.TaskSparrowBackend.Controllers;
 
 
-import com.example.TaskSparrowBackend.DataTransferModels.TechSpecialistDTO;
-import com.example.TaskSparrowBackend.DataTransferModels.UserDTO;
-import com.example.TaskSparrowBackend.Models.RegisteredUser;
-import com.example.TaskSparrowBackend.Models.TechnicalSpecialist;
-import com.example.TaskSparrowBackend.Repositories.RegisteredUserRepo;
-import com.example.TaskSparrowBackend.Repositories.TechnicalSpecialistRepo;
+import com.example.TaskSparrowBackend.DataTransferModels.ResolverDTO;
+import com.example.TaskSparrowBackend.DataTransferModels.DispatcherDTO;
+import com.example.TaskSparrowBackend.Models.Dispatcher;
+import com.example.TaskSparrowBackend.Models.Resolver;
+import com.example.TaskSparrowBackend.Repositories.DispatcherRepo;
+import com.example.TaskSparrowBackend.Repositories.ResolverRepo;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,33 +19,33 @@ import java.util.UUID;
 public class AuthController {
 	
 	@Autowired
-	private RegisteredUserRepo userRepo;
+	private DispatcherRepo dispatcherRepo;
 	
 	@Autowired
-	private TechnicalSpecialistRepo techSpecRepo;
+	private ResolverRepo resolverRepo;
 	
 	@Autowired
 	private ModelMapper modelMapper;
 	
-	@PostMapping("/register/user/email")
-	public ResponseEntity<RegisteredUser> UserRegister( @RequestBody UserDTO requestUser ){
+	@PostMapping("/register/dispatcher/email")
+	public ResponseEntity< Dispatcher > RegisterDispatcher( @RequestBody DispatcherDTO requestDispatcher ){
 		
-		RegisteredUser user = this.modelMapper.map(requestUser,RegisteredUser.class);
+		Dispatcher dispatcher = this.modelMapper.map(requestDispatcher, Dispatcher.class);
 		
-		System.out.println(" user :" + user);
-		System.out.println(" requestUser" + requestUser);
+		System.out.println(" dispatcher :" + dispatcher);
+		System.out.println(" requestDispatcher" + requestDispatcher);
 		
 		try{
-			int count_of_occurrence = Math.max(userRepo.countByEmail(requestUser.getEmail()), userRepo.countByUserName(requestUser.getUserName()));
+			int count_of_occurrence = Math.max(dispatcherRepo.countByEmail(requestDispatcher.getEmail()), dispatcherRepo.countByUserName(requestDispatcher.getUserName()));
 			
 			if(count_of_occurrence == 0){
-				user.setID(UUID.randomUUID());
-				userRepo.save(user);
-				return ResponseEntity.ok().body(user);
+				dispatcher.setID(UUID.randomUUID());
+				dispatcherRepo.save(dispatcher);
+				return ResponseEntity.ok().body(dispatcher);
 			}
 			else{
-				user = userRepo.getUserByEmail(requestUser.getEmail());
-				return ResponseEntity.badRequest().body(user);
+				dispatcher = dispatcherRepo.getByEmail(requestDispatcher.getEmail());
+				return ResponseEntity.badRequest().body(dispatcher);
 			}
 			
 		}catch (Exception e){
@@ -56,23 +56,23 @@ public class AuthController {
 		return ResponseEntity.badRequest().body(null);
 	}
 	
-	@GetMapping("/login/user/username")
-	public ResponseEntity<RegisteredUser> UserLoginByEmail(@RequestParam String email) {
-		RegisteredUser user = userRepo.getUserByEmail(email);
+	@GetMapping("/login/dispatcher/{email}")
+	public ResponseEntity< Dispatcher > LoginDispatcherByEmail( @PathVariable String email) {
+		Dispatcher dispatcher = dispatcherRepo.getByEmail(email);
 		
-		if (user != null) {
-			return ResponseEntity.ok().body(user);
+		if (dispatcher != null) {
+			return ResponseEntity.ok().body(dispatcher);
 		} else {
 			return ResponseEntity.notFound().build();
 		}
 	}
 	
-	@GetMapping("/login/user")
-	public ResponseEntity<RegisteredUser> UserLoginByUsername(@RequestParam String userName) {
-		RegisteredUser user = userRepo.getUserByUserName(userName);
+	@GetMapping("/login/dispatcher/{username}")
+	public ResponseEntity< Dispatcher > LoginDispatcherByUsername( @PathVariable String username) {
+		Dispatcher dispatcher = dispatcherRepo.getByUserName(username);
 		
-		if (user != null) {
-			return ResponseEntity.ok().body(user);
+		if (dispatcher != null) {
+			return ResponseEntity.ok().body(dispatcher);
 		} else {
 			return ResponseEntity.notFound().build();
 		}
@@ -81,25 +81,26 @@ public class AuthController {
 	
 	// Technical Specialist
 	
-	@PostMapping("/register/technicalspecialist")
-	public ResponseEntity<TechnicalSpecialist> TechSpecialistRegister( @RequestBody TechSpecialistDTO requestTechSpecialist ){
+	@PostMapping("/register/resolver")
+	public ResponseEntity< Resolver > RegisterResolver( @RequestBody ResolverDTO requestResolver ){
 		
-		TechnicalSpecialist  technicalSpecialist = this.modelMapper.map(requestTechSpecialist,TechnicalSpecialist.class);
+		Resolver resolver = this.modelMapper.map(requestResolver, Resolver.class);
 		
-		System.out.println("\n technical Specialist : " + technicalSpecialist);
-		System.out.println("\n requestTechSpecialist : " + requestTechSpecialist);
+		System.out.println("\n resolver : " + resolver);
+		System.out.println("\n requestResolver : " + requestResolver);
 		
 		try{
-			int count_of_occurrence = Math.max(techSpecRepo.countByEmail(requestTechSpecialist.getEmail()), techSpecRepo.countByUserName(requestTechSpecialist.getUserName()));
+			int count_of_occurrence = Math.max(resolverRepo.countByEmail(requestResolver.getEmail()),
+					resolverRepo.countByUserName(requestResolver.getUserName()));
 			
 			if(count_of_occurrence == 0){
-				technicalSpecialist.setID(UUID.randomUUID());
-				techSpecRepo.save(technicalSpecialist);
-				return ResponseEntity.ok().body(technicalSpecialist);
+				resolver.setID(UUID.randomUUID());
+				resolverRepo.save(resolver);
+				return ResponseEntity.ok().body(resolver);
 			}
 			else{
-				technicalSpecialist = techSpecRepo.getTechSpecByEmail(requestTechSpecialist.getEmail());
-				return ResponseEntity.badRequest().body(technicalSpecialist);
+				resolver = resolverRepo.getByEmail(requestResolver.getEmail());
+				return ResponseEntity.badRequest().body(resolver);
 			}
 			
 		}catch (Exception e){
@@ -110,23 +111,24 @@ public class AuthController {
 		return ResponseEntity.badRequest().body(null);
 	}
 	
-	@GetMapping("/login/technicalspecialist/email")
-	public ResponseEntity<TechnicalSpecialist> TechSpecLoginByEmail(@RequestParam String email) {
-		TechnicalSpecialist technicalSpecialist = techSpecRepo.getTechSpecByEmail(email);
+	
+	@GetMapping("/login/resolver/{email}")
+	public ResponseEntity< Resolver > LoginResolverByEmail( @PathVariable String email) {
+		Resolver resolver = resolverRepo.getByEmail(email);
 		
-		if (technicalSpecialist != null) {
-			return ResponseEntity.ok().body(technicalSpecialist);
+		if (resolver != null) {
+			return ResponseEntity.ok().body(resolver);
 		} else {
 			return ResponseEntity.notFound().build();
 		}
 	}
 	
-	@GetMapping("/login/technicalspecialist/username")
-	public ResponseEntity<TechnicalSpecialist> TechSpecLoginByUsername(@RequestParam String userName) {
-		TechnicalSpecialist technicalSpecialist = techSpecRepo.getTechSpecByUserName(userName);
+	@GetMapping("/login/resolver/{username}")
+	public ResponseEntity< Resolver > LoginResolverByUsername( @PathVariable String username) {
+		Resolver resolver = resolverRepo.getByUserName(username);
 		
-		if (technicalSpecialist != null) {
-			return ResponseEntity.ok().body(technicalSpecialist);
+		if (resolver != null) {
+			return ResponseEntity.ok().body(resolver);
 		} else {
 			return ResponseEntity.notFound().build();
 		}

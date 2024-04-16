@@ -9,7 +9,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @ToString
-public class TechSpecialistDTO {
+public class ResolverDTO {
 	private String userName;
 	private String email;
 	private String password;

@@ -1,21 +1,17 @@
 package com.example.TaskSparrowBackend.Models;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.Data;
-import org.springframework.cglib.core.Local;
-import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
 @Entity
-@Data
-@Table(name = "registered_user")
-public class RegisteredUser {
+@Table(name = "resolver")
+public class Resolver {
+	
 	@Id
 	@Column(name = "id",nullable = false,unique = true)
 	private UUID ID;
@@ -25,23 +21,25 @@ public class RegisteredUser {
 	private String email;
 	@Column(name="password",nullable = false)
 	private String password;
-	@Column(name = "last_name",nullable = false)
+	@Column(name = "last_name")
 	private String lastName;
-	@Column(name = "first_name",nullable = false)
+	@Column(name = "first_name")
 	private String firstName;
 	
-	@Column(name = "date_of_birth",nullable = false)
+	@Column(name = "date_of_birth")
 	private LocalDate dateOfBirth;
 	@Column(name = "nationality")
 	private String nationality;
-	@Column(name = "phone_number",nullable = false)
+	@Column(name = "phone_number")
 	private String phoneNumber;
 	
+	@Column(name = "role")
+	private String role;
 	
-	public RegisteredUser() {
+	public Resolver() {
 	}
 	
-	public RegisteredUser( UUID ID, String userName, String email, String password, String lastName, String firstName, LocalDate dateOfBirth, String nationality, String phoneNumber ) {
+	public Resolver( UUID ID, String userName, String email, String password, String lastName, String firstName, LocalDate dateOfBirth, String nationality, String role, String phoneNumber ) {
 		this.ID = ID;
 		this.userName = userName;
 		this.email = email;
@@ -50,6 +48,7 @@ public class RegisteredUser {
 		this.firstName = firstName;
 		this.dateOfBirth = dateOfBirth;
 		this.nationality = nationality;
+		this.role = role;
 		this.phoneNumber = phoneNumber;
 	}
 	
@@ -117,6 +116,14 @@ public class RegisteredUser {
 		this.nationality = nationality;
 	}
 	
+	public String getRole() {
+		return role;
+	}
+	
+	public void setRole( String role ) {
+		this.role = role;
+	}
+	
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
@@ -125,9 +132,10 @@ public class RegisteredUser {
 		this.phoneNumber = phoneNumber;
 	}
 	
+	
 	@Override
 	public String toString() {
-		return "RegisteredUser{" +
+		return "TechnicalSpecialist{" +
 				"ID=" + ID +
 				", userName='" + userName + '\'' +
 				", email='" + email + '\'' +
@@ -136,9 +144,8 @@ public class RegisteredUser {
 				", firstName='" + firstName + '\'' +
 				", dateOfBirth='" + dateOfBirth + '\'' +
 				", nationality='" + nationality + '\'' +
+				", role='" + role + '\'' +
 				", phoneNumber=" + phoneNumber +
 				'}';
 	}
-	
-	
 }
