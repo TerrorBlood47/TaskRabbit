@@ -1,8 +1,8 @@
 package com.example.TaskSparrowBackend.Controllers;
 
 
-import com.example.TaskSparrowBackend.DataTransferModels.ResolverDTO;
-import com.example.TaskSparrowBackend.DataTransferModels.DispatcherDTO;
+import com.example.TaskSparrowBackend.DataTransferObjects.ResolverDTO;
+import com.example.TaskSparrowBackend.DataTransferObjects.DispatcherDTO;
 import com.example.TaskSparrowBackend.Models.Dispatcher;
 import com.example.TaskSparrowBackend.Models.Resolver;
 import com.example.TaskSparrowBackend.Repositories.DispatcherRepo;
@@ -27,13 +27,13 @@ public class AuthController {
 	@Autowired
 	private ModelMapper modelMapper;
 	
-	@PostMapping("/register/dispatcher/email")
-	public ResponseEntity< Dispatcher > RegisterDispatcher( @RequestBody DispatcherDTO requestDispatcher ){
+	@PostMapping("/register/dispatcher/")
+	public ResponseEntity< ? > RegisterDispatcher( @RequestBody DispatcherDTO requestDispatcher ){
 		
 		Dispatcher dispatcher = this.modelMapper.map(requestDispatcher, Dispatcher.class);
 		
-		System.out.println(" dispatcher :" + dispatcher);
-		System.out.println(" requestDispatcher" + requestDispatcher);
+		System.out.println(" dispatcher : " + dispatcher);
+		System.out.println(" requestDispatcher : " + requestDispatcher);
 		
 		try{
 			int count_of_occurrence = Math.max(dispatcherRepo.countByEmail(requestDispatcher.getEmail()), dispatcherRepo.countByUserName(requestDispatcher.getUserName()));
@@ -45,7 +45,7 @@ public class AuthController {
 			}
 			else{
 				dispatcher = dispatcherRepo.getByEmail(requestDispatcher.getEmail());
-				return ResponseEntity.badRequest().body(dispatcher);
+				return ResponseEntity.badRequest().body("Already Registered");
 			}
 			
 		}catch (Exception e){
@@ -53,11 +53,11 @@ public class AuthController {
 			System.out.println(e.getCause());
 		}
 		
-		return ResponseEntity.badRequest().body(null);
+		return ResponseEntity.badRequest().body("Something went wrong");
 	}
 	
 	@GetMapping("/login/dispatcher/{email}")
-	public ResponseEntity< Dispatcher > LoginDispatcherByEmail( @PathVariable String email) {
+	public ResponseEntity< ? > LoginDispatcherByEmail( @PathVariable String email) {
 		Dispatcher dispatcher = dispatcherRepo.getByEmail(email);
 		
 		if (dispatcher != null) {
@@ -82,7 +82,7 @@ public class AuthController {
 	// Technical Specialist
 	
 	@PostMapping("/register/resolver")
-	public ResponseEntity< Resolver > RegisterResolver( @RequestBody ResolverDTO requestResolver ){
+	public ResponseEntity< ? > RegisterResolver( @RequestBody ResolverDTO requestResolver ){
 		
 		Resolver resolver = this.modelMapper.map(requestResolver, Resolver.class);
 		
@@ -100,7 +100,7 @@ public class AuthController {
 			}
 			else{
 				resolver = resolverRepo.getByEmail(requestResolver.getEmail());
-				return ResponseEntity.badRequest().body(resolver);
+				return ResponseEntity.badRequest().body("Already Registered");
 			}
 			
 		}catch (Exception e){
@@ -108,12 +108,12 @@ public class AuthController {
 			System.out.println(e.getCause());
 		}
 		
-		return ResponseEntity.badRequest().body(null);
+		return ResponseEntity.badRequest().body("Something went wrong");
 	}
 	
 	
 	@GetMapping("/login/resolver/{email}")
-	public ResponseEntity< Resolver > LoginResolverByEmail( @PathVariable String email) {
+	public ResponseEntity< ? > LoginResolverByEmail( @PathVariable String email) {
 		Resolver resolver = resolverRepo.getByEmail(email);
 		
 		if (resolver != null) {

@@ -1,15 +1,17 @@
-package com.example.TaskSparrowBackend.DataTransferModels;
+package com.example.TaskSparrowBackend.DataTransferObjects;
 
 import lombok.*;
 
 import java.time.LocalDate;
 
+
 @Data
-@AllArgsConstructor
 @Getter
 @Setter
+@AllArgsConstructor
 @ToString
-public class ResolverDTO {
+public class DispatcherDTO {
+	
 	private String userName;
 	private String email;
 	private String password;
@@ -18,5 +20,5 @@ public class ResolverDTO {
 	private LocalDate dateOfBirth;
 	private String nationality;
 	private String phoneNumber;
-	private String role;
+	
 }

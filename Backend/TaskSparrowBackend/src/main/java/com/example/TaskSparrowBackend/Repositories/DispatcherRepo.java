@@ -21,4 +21,6 @@ public interface DispatcherRepo extends JpaRepository< Dispatcher, UUID > {
 	
 	@Query("SELECT d FROM Dispatcher d WHERE userName = ?1")
 	Dispatcher getByUserName( String userName );
+	
+	
 }
