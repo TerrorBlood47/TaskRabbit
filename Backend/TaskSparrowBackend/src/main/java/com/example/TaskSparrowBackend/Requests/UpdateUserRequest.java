@@ -10,7 +10,5 @@ import lombok.NoArgsConstructor;
 public class UpdateUserRequest {
 	
 	private String name;
-	private byte[] profile_pic;
-	private String contentType;
 	private String password;
 }

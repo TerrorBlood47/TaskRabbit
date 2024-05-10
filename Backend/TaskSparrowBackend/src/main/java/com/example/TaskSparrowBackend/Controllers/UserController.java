@@ -22,6 +22,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/user")
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
 	
 	@Autowired
@@ -40,14 +41,13 @@ public class UserController {
 	
 	@PutMapping("/update")
 	public ResponseEntity< ApiResponse > updateUserHandler( @RequestBody UserRequest req,
-															@RequestParam MultipartFile file,
 	                                                        @RequestParam("userId") Integer userId)
 			throws UserException, IOException {
 		
 		UpdateUserRequest updateUserRequest = new UpdateUserRequest();
 		updateUserRequest.setName(req.getName());
 		updateUserRequest.setPassword(req.getPassword());
-		updateUserRequest.setProfile_pic(ImageUitls.compressImage(file.getBytes()));
+		
 		
 		userService.updateUser(userId, updateUserRequest);
 		
@@ -56,16 +56,26 @@ public class UserController {
 		return new ResponseEntity<ApiResponse>(res, HttpStatus.ACCEPTED);
 	}
 	
-	@GetMapping("/profile_pic/{userId}")
-	public ResponseEntity<?> DownloadProfileImage(@RequestParam Integer userId) throws UserException {
-		User user = userService.findUserById(userId);
+	@DeleteMapping("/delete/{userId}")
+	public ResponseEntity< ApiResponse > deleteUserHandler( @PathVariable Integer userId ) throws UserException {
 		
-		if(user != null) {
-			return ResponseEntity.status(HttpStatus.OK)
-					.contentType(MediaType.valueOf(user.getContentType()))
-					.body(user.getProfile_pic());
-		}
+		userService.deleteUser(userId);
 		
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("MESSAGE : IMAGE NOT FOUND");
+		ApiResponse res = new ApiResponse("USER DELETED SUCCESFULLY", true);
+		
+		return new ResponseEntity<ApiResponse>(res, HttpStatus.ACCEPTED);
 	}
+	
+//	@GetMapping("/profile_pic/{userId}")
+//	public ResponseEntity<?> DownloadProfileImage(@RequestParam Integer userId) throws UserException {
+//		User user = userService.findUserById(userId);
+//
+//		if(user != null) {
+//			return ResponseEntity.status(HttpStatus.OK)
+//					.contentType(MediaType.valueOf(user.getContentType()))
+//					.body(user.getProfile_pic());
+//		}
+//
+//		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("MESSAGE : IMAGE NOT FOUND");
+//	}
 }

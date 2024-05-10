@@ -1,7 +1,8 @@
 package com.example.TaskSparrowBackend.Controllers;
 
+import Service.ProfileService;
 import com.example.TaskSparrowBackend.Models.Profile;
-import com.example.TaskSparrowBackend.Repositories.ProfileRepo;
+import com.example.TaskSparrowBackend.Repositories.ProfileRepository;
 import com.example.TaskSparrowBackend.Utils.ImageUitls;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,48 +17,104 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/profile")
+@RequestMapping("/api/user/profile")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ProfileController {
 	
 	@Autowired
-	private ProfileRepo profileRepo;
+	private ProfileRepository profileRepo;
+	
+	@Autowired
+	private ProfileService profileService;
 	
 	@Autowired
 	private ModelMapper modelMapper;
 	
-	@PostMapping(value = "/uploadImage" , consumes = {MediaType.MULTIPART_FORM_DATA_VALUE} ,
-	produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<?> UploadProfileImage( @RequestParam UUID img_id,
-	                                             @RequestParam MultipartFile file) throws IOException {
+	@PostMapping("/update")
+	public ResponseEntity< ? > updateProfileHandler( @RequestParam("userId") Integer userId,
+	                                         @RequestParam(value = "isTasker",required = false) Boolean isTasker,
+	                                         @RequestParam(value = "contentType", required = false) String contentType,
+	                                         @RequestParam(value = "profileImage", required = false) MultipartFile profileImage,
+	                                         @RequestParam(value = "contact", required = false) Integer contact,
+	                                         @RequestParam(value = "profession",required = false) String profession,
+	                                         @RequestParam(value = "address",required = false) String address,
+	                                         @RequestParam(value = "longitude",required = false) Double longitude,
+	                                         @RequestParam(value = "latitude",required = false) Double latitude) throws IOException {
 		
-		 Profile profileDispatcher = profileRepo.save(Profile.builder()
-				.imgID(img_id)
-				.name(file.getOriginalFilename())
-				.type(file.getContentType())
-				.profileImage(ImageUitls.compressImage(file.getBytes()))
-				.build());
+		Optional<Profile> opt = profileRepo.findByUserId(userId);
 		
-		 if (profileDispatcher != null) {
-			 return ResponseEntity.status(HttpStatus.OK)
-					 .body("Image Uploaded Successfully");
+		if(opt.isPresent()){
+			Profile profile = opt.get();
+			
+			profile.setIsTasker(isTasker? isTasker : profile.getIsTasker());
+			profile.setContentType(contentType.length() > 0? contentType : profile.getContentType());
+			profile.setProfileImage(profileImage != null && profileImage.getSize()>0?
+					ImageUitls.compressImage(profileImage.getBytes()) : profile.getProfileImage());
+			profile.setContact(contact!=null ? contact : profile.getContact());
+			profile.setProfession(profession!=null ? profession : profile.getProfession());
+			profile.setAddress(address!=null ? address : profile.getAddress());
+			profile.setLongitude(longitude);
+			profile.setLatitude(latitude);
+			
+			profile = profileRepo.save(profile);
+			
+			profile.setProfileImage(ImageUitls.decompressImage(profile.getProfileImage()));
+			
+			return ResponseEntity.ok(profile);
 		}
-		 
-		 return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-				 .body("Image could not be uploaded");
+		
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Profile not found");
 	}
 	
 	
-	@GetMapping("/downloadImage")
-	public ResponseEntity<?> DownloadProfileImage(@RequestParam UUID img_id){
-		Optional< Profile > profile = profileRepo.findById(img_id);
-		byte[] imageBytes = ImageUitls.decompressImage(profile.get().getProfileImage());
+	@PostMapping("/create")
+	public ResponseEntity< ? > createProfileHandler( @RequestParam("userId") Integer userId,
+	                                         @RequestParam(value = "isTasker", required = false) Boolean isTasker,
+	                                         @RequestParam(value = "contentType",required = false) String contentType,
+	                                         @RequestParam(value = "profileImage",required = false) MultipartFile profileImage,
+	                                         @RequestParam(value = "contact",required = false) Integer contact,
+	                                         @RequestParam(value = "profession",required = false) String profession,
+	                                         @RequestParam(value = "address",required = false) String address,
+	                                         @RequestParam(value = "longitude",required = false) Double longitude,
+	                                         @RequestParam(value = "latitude",required = false) Double latitude) throws IOException {
 		
-		if(profile != null) {
-			return ResponseEntity.status(HttpStatus.OK)
-					.contentType(MediaType.valueOf(profile.get().getType()))
-					.body(imageBytes);
+		Optional<Profile> opt = profileRepo.findByUserId(userId);
+		
+		if ( opt.isPresent() ){
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Profile already exists");
 		}
 		
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body("MESSAGE : IMAGE NOT FOUND");
+		Profile profile = Profile.builder()
+				.isTasker(isTasker)
+				.contentType(contentType)
+				.profileImage(profileImage != null ? ImageUitls.compressImage(profileImage.getBytes()) : null)
+				.contact(contact)
+				.profession(profession)
+				.address(address)
+				.longitude(longitude)
+				.latitude(latitude)
+				.userId(userId)
+				.build();
+		
+		profile = profileRepo.save(profile);
+		
+		profile.setProfileImage(ImageUitls.decompressImage(profile.getProfileImage()));
+		
+		return ResponseEntity.ok(profile);
+	
+	}
+	
+	
+	@GetMapping("/get/{userID}")
+	public ResponseEntity< ? > getProfileByUserIdHandler( @PathVariable Integer userID ) {
+		Optional<Profile> opt = profileRepo.findByUserId(userID);
+		
+		if ( opt.isPresent() ){
+			Profile profile = opt.get();
+			profile.setProfileImage(ImageUitls.decompressImage(profile.getProfileImage()));
+			return ResponseEntity.ok(profile);
+		}
+		
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Profile not found");
 	}
 }

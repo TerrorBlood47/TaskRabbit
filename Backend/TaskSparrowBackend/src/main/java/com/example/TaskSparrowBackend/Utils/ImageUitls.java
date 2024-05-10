@@ -27,6 +27,11 @@ public class ImageUitls {
 	
 	
 	public static byte[] decompressImage(byte[] data) {
+		
+		if(data == null || data.length == 0) {
+			return null;
+		}
+		
 		Inflater inflater = new Inflater();
 		inflater.setInput(data);
 		ByteArrayOutputStream outputStream = new ByteArrayOutputStream(data.length);

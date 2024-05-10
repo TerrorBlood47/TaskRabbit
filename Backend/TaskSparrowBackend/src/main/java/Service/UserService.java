@@ -17,4 +17,6 @@ public interface UserService {
 			UserException;
 	
 	public User findByEmail( String email );
+	
+	public void deleteUser( Integer userId );
 }

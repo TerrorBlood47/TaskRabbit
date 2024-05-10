@@ -25,12 +25,6 @@ public class User {
 	@Column(name = "password", nullable = false)
 	private String password;
 	
-	@Lob
-	@Column(name = "profile_pic", nullable = false)
-	private byte[] profile_pic;
-	
-	@Column(name = "content_type", nullable = false)
-	private String contentType;
 	
 	
 }

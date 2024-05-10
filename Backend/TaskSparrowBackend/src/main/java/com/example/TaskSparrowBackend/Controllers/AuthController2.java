@@ -19,6 +19,7 @@ import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/auth")
+@CrossOrigin(origins = "http://localhost:3000")
 public class AuthController2 {
 	
 	private UserService userService;
@@ -32,42 +33,38 @@ public class AuthController2 {
 		this.userRepository = userRepository;
 	}
 	
-	@PostMapping(value = "/signup" , consumes = { MediaType.MULTIPART_FORM_DATA_VALUE} ,
-			produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity< ApiResponse> SignUpHandler(
-			@RequestParam String email
-			,@RequestParam String name
-			, @RequestParam String password,
-			@RequestParam MultipartFile file) throws IOException {
+	@PostMapping(value = "/signup")
+	public ResponseEntity< ? > SignUpHandler(
+			@RequestBody UserRequest req
+			) throws IOException {
 		
-		User isUser = userRepository.findByEmail(email);
+		User isUser = userRepository.findByEmail(req.getEmail());
 		
 		if ( isUser != null ){
-			return ResponseEntity.ok(new ApiResponse("Email is used with another account : " + email, false));
+			return ResponseEntity.ok(new ApiResponse("Email is used with another account : " + req.getEmail(), false));
 		}
 		
 		User user = new User();
-		user.setEmail(email);
-		user.setName(name);
-		user.setPassword(password);
-		user.setProfile_pic(ImageUitls.compressImage(file.getBytes()));
-		user.setContentType(file.getContentType());
+		user.setEmail(req.getEmail());
+		user.setName(req.getName());
+		user.setPassword(req.getPassword());
+		
 		
 		userRepository.save(user);
 		
-		return ResponseEntity.ok(new ApiResponse("User created successfully", true));
+		return ResponseEntity.ok(user);
 	}
 	
-	@GetMapping("/login")
+	@GetMapping ("/login")
 	public ResponseEntity<?> LoginHandler( @RequestParam String email
 			, @RequestParam String password ) throws UserException {
 		User user = userService.findByEmailAndPassword(email, password);
 		
 		if(user == null){
-			return ResponseEntity.ok(new ApiResponse("Invalid credentials", false));
+			return ResponseEntity.ok(new ApiResponse("User not found", false));
 		}
-		
-		return new ResponseEntity(user, HttpStatus.OK);
+		System.out.println(user);
+		return ResponseEntity.ok(user);
 	}
 	
 	
