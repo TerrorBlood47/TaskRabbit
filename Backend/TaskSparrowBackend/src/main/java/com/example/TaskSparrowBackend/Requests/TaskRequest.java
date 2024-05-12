@@ -21,7 +21,7 @@ public class TaskRequest {
 	private Integer wage;
 	private String area;
 	
-	private Date date;
+	private String date;
 	
 	private String time_of_the_day;
 	

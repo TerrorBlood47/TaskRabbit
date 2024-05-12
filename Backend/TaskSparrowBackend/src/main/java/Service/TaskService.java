@@ -14,4 +14,6 @@ public interface TaskService {
 	public List<Task> findTaskByTaskerId( Integer tasker_id);
 	public List<Task> findTaskByUserId( Integer user_id);
 	public Task updateTask( Integer taskId, TaskRequest req);
+	
+	public void deleteTask( Integer taskId );
 }

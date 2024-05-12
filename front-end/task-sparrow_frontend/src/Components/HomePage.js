@@ -18,7 +18,7 @@ import UserContext from './Context/UserContext';
 const HomePage = () => {
 	const navigate = useNavigate();
 
-	const { user } = useContext(UserContext);
+	const { user, setUser } = useContext(UserContext);
 
 	console.log("user : ", user);
 

@@ -71,7 +71,10 @@ public class TaskerController {
 	
 	@GetMapping("/userId/{userId}")
 	public Tasker findTaskerByUserIdHandler( @PathVariable("userId") Integer userId){
+		System.out.println("user id" + userId);
 		Tasker tasker = taskerService.findTaskerByUserId(userId);
+		
+		System.out.println(tasker);
 		
 		return tasker;
 	}
@@ -82,4 +85,7 @@ public class TaskerController {
 		
 		return tasker;
 	}
+	
+	
+	
 }

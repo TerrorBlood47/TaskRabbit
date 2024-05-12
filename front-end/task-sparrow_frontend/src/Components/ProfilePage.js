@@ -1,11 +1,12 @@
 import { Button } from 'flowbite-react'
 import React from 'react'
-import { useState ,useEffect, useContext } from 'react'
+import { useState, useEffect, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import UserContext from './Context/UserContext';
 
 
 const PROFILE_API = "http://localhost:8080/api/user/profile";
+const TASK_API = "http://localhost:8080/api/task";
 
 
 const ProfilePage = () => {
@@ -16,24 +17,9 @@ const ProfilePage = () => {
     console.log("User : ", user);
 
 
-    useEffect(() => {
-        fetch(PROFILE_API) 
-            .then(response => response.json())
-            .then(data => {
-                setName(user.name || 'John Doe');
-                setEmail(user.email );
-                setProfession(data.profession || 'Software Engineer');
-                setContact(data.contact || '+1 234 567 890');
-                setLocation(data.address || 'New York, USA');
-                setSelectedFile(data.profileImage || null);
-            })
-            .catch(error => console.error(error));
-    }); // Empty dependency array means this effect will only run once, after the first render
 
 
-
-
-    const [name, setName] = useState(user? user.name : 'John Doe');
+    const [name, setName] = useState(user ? user.name : 'John Doe');
     const [profession, setProfession] = useState('Software Engineer');
     const [contact, setContact] = useState('+1 234 567 890');
     const [email, setEmail] = useState(user ? user.email : 'johndoe@example.com');
@@ -41,7 +27,68 @@ const ProfilePage = () => {
     const [selectedFile, setSelectedFile] = useState(null);
 
 
-    
+    const [pendingTasks, setPendingTasks] = useState([]);
+    const [acceptedTasks, setAcceptedTasks] = useState([]);
+
+
+    useEffect(() => {
+        fetch(`${PROFILE_API}/get/${user?.id}`, { method: 'GET' })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Data : ", data);
+                setName(user.name || 'John Doe');
+                setEmail(user.email);
+                setProfession(data.profession || 'Software Engineer');
+                setContact(data.contact || '+1 234 567 890');
+                setLocation(data.address || 'New York, USA');
+                setSelectedFile(data.profileImage || null);
+            })
+            .catch(error => console.error(error));
+
+        if (user && user.id) {
+            fetch(`${TASK_API}/find/pending/user/${user?.id}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data)
+                    setPendingTasks(data)
+                })
+                .catch(error => console.error(error));
+
+
+            fetch(`${TASK_API}/find/accepted/user/${user?.id}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data)
+                    setAcceptedTasks(data)
+                })
+                .catch(error => console.error(error));
+
+        }
+
+    }, [user]);
+
+
+    const handleDeleteTask = async (taskId) => {
+        try {
+            const task_response = await fetch(`${TASK_API}/delete/${taskId}`, {
+                method: 'DELETE'
+            });
+
+            console.log("task response delete ",task_response)
+
+            if (!(task_response.status === 200)) {
+                const message = await task_response.text();
+                throw new Error(`HTTP error! status: ${task_response.status}, message: ${message}`);
+            }
+
+            const newTasks = pendingTasks.filter(task => task.taskId !== taskId);
+            setPendingTasks(newTasks);
+
+        } catch (error) {
+            console.log("Error : ", error);
+        }
+    }
+
 
     const handleLogout = () => {
 
@@ -160,12 +207,12 @@ const ProfilePage = () => {
                     onChange={(e) => setLocation(e.target.value)}
                 />
 
-                <div className='mt-4 flex space-x-2'>
+                {/* <div className='mt-4 flex space-x-2'>
                     <button className='px-4 py-2 rounded bg-white text-pink-400 font-bold'>Follow</button>
                     <button className='px-4 py-2 rounded bg-white text-pink-400 font-bold'>Message</button>
-                </div>
+                </div> */}
 
-                <Button 
+                <Button
                     onClick={handleProfileUpdate}
                     className='mt-20 px-4 py-2 rounded bg-white text-pink-400 font-bold text-2xl'
                 >
@@ -185,8 +232,54 @@ const ProfilePage = () => {
             {/* right */}
             <div className=' w-[80%] h-[95%] m-2 bg-pink-200 rounded-xl'>
 
+                <div className=' overflow-y-scroll border border-red-500 h-60'>
+                    <p>task pending</p>
+                    {Array.isArray(pendingTasks) && pendingTasks.map((task, index) => (
+                        <div key={index} className=' m-3 bg-white'>
+                            {console.log(task)}
+                            <h2>{task?.title}</h2>
+                            <p>{task?.description}</p>
+                            <p>{task?.wage}</p>
+                            <p>{task?.area}</p>
+                            <p>{task?.date}</p>
+                            <p>{task?.time_of_the_day}</p>
+                            <p>{task?.duration}</p>
+                            <p>{task?.status}</p>
+
+
+                            <button className=' bg-red-500 m-1' onClick={() => handleDeleteTask(task.taskId)}>Delete Task</button>
+                        </div>
+                    ))}
+                </div>
+
+
+
+
+
+                <div className=' overflow-y-scroll border border-red-500 h-60'>
+                    <p>task accepted</p>
+                    {Array.isArray(acceptedTasks) && acceptedTasks.map((task, index) => (
+                        <div key={index} className=' m-3 bg-white'>
+                            {console.log(task)}
+                            <h2>{task?.title}</h2>
+                            <p>{task?.description}</p>
+                            <p>{task?.wage}</p>
+                            <p>{task?.area}</p>
+                            <p>{task?.date}</p>
+                            <p>{task?.time_of_the_day}</p>
+                            <p>{task?.duration}</p>
+                            <p>{task?.status}</p>
+
+
+                        </div>
+                    ))}
+                </div>
+
             </div>
+
         </div>
+
+
     )
 }
 

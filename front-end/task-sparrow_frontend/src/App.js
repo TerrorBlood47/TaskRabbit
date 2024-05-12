@@ -17,6 +17,7 @@ function App() {
     // Load user data from localStorage when the app is loaded
     useEffect(() => {
         const userData = localStorage.getItem('user');
+        console.log('User data:', userData);
         if (userData) {
             setUser(JSON.parse(userData));
         }

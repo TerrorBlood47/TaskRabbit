@@ -2,6 +2,7 @@ package Service;
 
 import com.example.TaskSparrowBackend.Models.Tasker;
 import com.example.TaskSparrowBackend.Models.User;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,4 +20,7 @@ public interface TaskerService {
 	
 	public Tasker findTaskerByUserId( Integer userId);
 	
+
+	
+
 }

@@ -28,11 +28,11 @@ public class Task {
 	private Integer taskerId;
 	private Integer wage;
 	private String area;
-	@Column(name = "date", nullable = false)
-	private Date date;
-	@Column(name = "time_of_the_day", nullable = false)
+	@Column(name = "date")
+	private String date;
+	@Column(name = "time_of_the_day")
 	private String time_of_the_day;
-	@Column(name = "duration", nullable = false)
+	@Column(name = "duration")
 	private Integer duration;
 	
 	@Column(name = "status", nullable = false)
