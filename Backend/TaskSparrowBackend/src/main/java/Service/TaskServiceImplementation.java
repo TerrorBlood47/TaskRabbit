@@ -54,6 +54,7 @@ public class TaskServiceImplementation implements TaskService{
 		task.setUserId(req.getUserId());
 		task.setStatus(req.getStatus());
 		task.setDate(req.getDate());
+		task.setTaskerRole(req.getTaskerRole());
 		task.setTime_of_the_day(req.getTime_of_the_day());
 		task.setDuration(req.getDuration());
 		

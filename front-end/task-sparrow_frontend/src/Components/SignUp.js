@@ -55,7 +55,7 @@ const SignUp = () => {
                     const formData = new FormData();
                     formData.append('userId', response.data.id);
                     formData.append('isTasker', false);
-                    
+
 
                     const profile_response = await fetch('http://localhost:8080/api/user/profile/create', {
                         method: 'POST',
@@ -76,7 +76,7 @@ const SignUp = () => {
 
                     setUser(response.data);
 
-                    navigate('/');
+                    navigate('/profile');
                 }
             }
             else {

@@ -31,6 +31,12 @@ public class TaskController {
 	@PostMapping("/create")
 	public ResponseEntity< Task > createTask( @RequestBody TaskRequest req ) {
 		
+		System.out.println("task create request : "+req.toString());
+		
+		if (req.getUserId() == null) {
+			return ResponseEntity.badRequest().body(null);
+		}
+		
 		//Task task = this.modelMapper.map(req, Task.class);
 		Task task = new Task();
 		task.setArea(req.getArea());
@@ -40,24 +46,25 @@ public class TaskController {
 		task.setTaskerId(req.getTaskerId());
 		task.setUserId(req.getUserId());
 		task.setStatus(req.getStatus());
+		task.setTaskerRole(req.getTaskerRole());
 		task.setDate(req.getDate());
 		task.setTime_of_the_day(req.getTime_of_the_day());
 		task.setDuration(req.getDuration());
 		
-		taskRepository.save(task);
-		return ResponseEntity.ok().body(task);
+		return ResponseEntity.ok().body(taskRepository.save(task));
 		
 	}
 	
 	@PostMapping("/update")
-	public ResponseEntity< Task > updateTask( @RequestParam Integer taskId, @RequestBody TaskRequest req ) {
+	public ResponseEntity< Task > updateTask( @RequestParam Integer taskId, @RequestParam Integer taskerId ) {
 		
-		Task task = taskService.updateTask(taskId, req);
+		Task task = taskRepository.findById(taskId).get();
 		if ( task == null ){
 			return ResponseEntity.badRequest().body(null);
 		}
 		
-		return ResponseEntity.ok().body(task);
+		task.setTaskerId(taskerId);
+		return ResponseEntity.ok().body(taskRepository.save(task));
 		
 	}
 	

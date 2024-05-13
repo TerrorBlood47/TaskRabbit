@@ -18,6 +18,7 @@ public class TaskRequest {
 	
 	private Integer userId ;
 	private Integer taskerId;
+	private String taskerRole;
 	private Integer wage;
 	private String area;
 	

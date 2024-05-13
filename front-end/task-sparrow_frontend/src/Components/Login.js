@@ -23,7 +23,7 @@ const Login = () => {
 
             setUser(response.data);
 
-            navigate('/');
+            navigate('/profile');
 
         } catch (error) {
             console.log("catch error : ", error);

@@ -3,10 +3,11 @@ import React from 'react'
 import { useState, useEffect, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import UserContext from './Context/UserContext';
-
+import axios from 'axios';
 
 const PROFILE_API = "http://localhost:8080/api/user/profile";
 const TASK_API = "http://localhost:8080/api/task";
+const TASKER_API = "http://localhost:8080/api/tasker";
 
 
 const ProfilePage = () => {
@@ -30,6 +31,137 @@ const ProfilePage = () => {
     const [pendingTasks, setPendingTasks] = useState([]);
     const [acceptedTasks, setAcceptedTasks] = useState([]);
 
+    const [availableTaskers, setAvailableTaskers] = useState([]);
+
+    // const [task, setTask] = useState({
+    //     taskId : null,
+    //     title: '',
+    //     description: '',
+    //     userId: user?.id,
+    //     taskerId: '',
+    //     taskerRole: '',
+    //     wage: 0,
+    //     area: '',
+    //     date: '',
+    //     time_of_the_day: '',
+    //     duration: 0,
+    //     status: 'PENDING'
+    // });
+
+    const [currentTaskId, setCurrentTaskId] = useState(null);
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
+    const [taskerRole, setTaskerRole] = useState('');
+    const [wage, setWage] = useState(0);
+    const [area, setArea] = useState('');
+    const [date, setDate] = useState('');
+    const [time_of_the_day, setTime_of_the_day] = useState('');
+    const [duration, setDuration] = useState(0);
+
+    // const handleChange = (e) => {
+    //     setTask({
+    //         ...task,
+    //         [e.target.name]: e.target.value
+    //     });
+    // };
+
+    const handleSubmit = (e) => {
+        //e.preventDefault();
+        // Submit the form
+
+        const req = {
+            taskId: null,
+            title: title,
+            description: description,
+            userId: user?.id,
+            taskerId: null,
+            taskerRole: taskerRole,
+            wage: wage,
+            area: area,
+            date: date,
+            time_of_the_day: time_of_the_day,
+            duration: duration,
+            status: 'PENDING'
+        }
+
+        console.log("task request " , req);
+
+        if(req.userId !== null && req.status === 'PENDING'){
+            axios.post(`${TASK_API}/create`, req)
+        .then(response => {
+            console.log('Task created:', response.data);
+
+            // setTask(response.data);
+            setCurrentTaskId(response.data.taskId);
+            
+            let role = response.data.taskerRole;
+
+            console.log("role : ", role);
+
+            fetch(`${TASKER_API}/role/${role}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log("available taskers : ",data)
+                    setAvailableTaskers(data)
+                })
+                .catch(error => console.error(error));
+
+
+
+            // Clear the form
+            // setTask({
+            //     taskId : null,
+            //     title: '',
+            //     description: '',
+            //     userId: user?.id,
+            //     taskerId: '',
+            //     taskerRole: '',
+            //     wage: 0,
+            //     area: '',
+            //     date: '',
+            //     time_of_the_day: '',
+            //     duration: 0,
+            //     status: 'PENDING'
+            // });
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+        }
+        else{
+            console.log("task not submitted");
+        }
+        
+    };
+
+
+    const handleChooseTasker = (taskerId) => {
+        console.log('Tasker ID:', taskerId);
+
+        console.log("current task id : ", currentTaskId);
+    
+        axios.post(`${TASK_API}/update?taskId=${currentTaskId}&taskerId=${taskerId}`)
+        .then(response => {
+            console.log('Task updated:', response.data);
+            setCurrentTaskId(null);
+            setAvailableTaskers([]);
+            setTaskerRole('');
+            setTitle('');
+            setDescription('');
+            setWage(0);
+            setArea('');
+            setDate('');
+            setTime_of_the_day('');
+            setDuration(0);
+
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    };
+    
+
+
 
     useEffect(() => {
         fetch(`${PROFILE_API}/get/${user?.id}`, { method: 'GET' })
@@ -42,6 +174,7 @@ const ProfilePage = () => {
                 setContact(data.contact || '+1 234 567 890');
                 setLocation(data.address || 'New York, USA');
                 setSelectedFile(data.profileImage || null);
+                // setTask({userId: user.id});
             })
             .catch(error => console.error(error));
 
@@ -74,7 +207,7 @@ const ProfilePage = () => {
                 method: 'DELETE'
             });
 
-            console.log("task response delete ",task_response)
+            console.log("task response delete ", task_response)
 
             if (!(task_response.status === 200)) {
                 const message = await task_response.text();
@@ -265,12 +398,42 @@ const ProfilePage = () => {
                             <p>{task?.description}</p>
                             <p>{task?.wage}</p>
                             <p>{task?.area}</p>
+                            <p>{task?.taskerRole}</p>
                             <p>{task?.date}</p>
                             <p>{task?.time_of_the_day}</p>
                             <p>{task?.duration}</p>
                             <p>{task?.status}</p>
 
 
+                        </div>
+                    ))}
+                </div>
+
+                <div>
+                    <input type='text' placeholder='Title' value={title} onChange={(e) => setTitle(e.target.value)} />
+                    <input type='text' placeholder='Description' value={description} onChange={(e) => setDescription(e.target.value)} />
+                    <input type='text' placeholder='Tasker Role' value={taskerRole} onChange={(e) => setTaskerRole(e.target.value)} />
+                    <input type='number' placeholder='Wage' value={wage} onChange={(e) => setWage(e.target.value)} />
+                    <input type='text' placeholder='Area' value={area} onChange={(e) => setArea(e.target.value)} />
+                    <input type='date' placeholder='Date' value={date} onChange={(e) => setDate(e.target.value)} />
+                    <input type='text' placeholder='Time of the Day' value={time_of_the_day} onChange={(e) => setTime_of_the_day(e.target.value)} />
+                    <input type='number' placeholder='Duration' value={duration} onChange={(e) => setDuration(e.target.value)} />
+                    <button onClick={handleSubmit}>Submit Task</button>
+                </div>
+
+                <div className=' overflow-y-scroll border border-red-500 h-60'>
+                    <p>taskers available</p>
+                    {Array.isArray(availableTaskers) && availableTaskers.map((tasker, index) => (
+                        <div key={index} className=' m-3 bg-white'>
+                            {console.log(tasker)}
+                            <h2>{tasker?.name}</h2>
+                            <p>{tasker?.area}</p>
+                            <p>{tasker?.minWagePerHour}</p>
+                            <p>{tasker?.phoneNumber}</p>
+                            <p>{tasker?.role}</p>
+
+
+                            <button className=' bg-red-500 m-1' onClick={() => handleChooseTasker(tasker?.tasker_id)}>Choose Tasker</button>
                         </div>
                     ))}
                 </div>

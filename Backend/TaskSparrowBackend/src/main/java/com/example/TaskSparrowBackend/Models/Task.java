@@ -26,13 +26,15 @@ public class Task {
 	@Column(name = "user_id", nullable = false)
 	private Integer userId;
 	private Integer taskerId;
+	@Column(name = "tasker_role", nullable = false)
+	private String taskerRole;
 	private Integer wage;
 	private String area;
 	@Column(name = "date")
 	private String date;
 	@Column(name = "time_of_the_day")
 	private String time_of_the_day;
-	@Column(name = "duration")
+	@Column(name = "duration",nullable = true)
 	private Integer duration;
 	
 	@Column(name = "status", nullable = false)

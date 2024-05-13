@@ -49,10 +49,12 @@ public class TaskerController {
 	
 	
 	@GetMapping("/role/{role}")
-	public List< Tasker > findTaskerByRoleHandler( @PathVariable("role") String role){
+	public ResponseEntity<?> findTaskerByRoleHandler( @PathVariable("role") String role){
+		System.out.println("role" + role);
 		List<Tasker> taskers = taskerService.findTaskerByRole(role);
 		
-		return taskers;
+		System.out.println("tasker "+taskers);
+		return ResponseEntity.ok(taskers);
 	}
 	
 	@GetMapping("/area/{areas}")
