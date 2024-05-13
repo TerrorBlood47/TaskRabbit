@@ -3,6 +3,8 @@ import { useState, useEffect, useContext } from 'react';
 import UserContext from '../Context/UserContext';
 import axios from 'axios';
 
+import pfp from '../../Assets/zisan.jpg';
+
 
 
 const TASKER_API = "http://localhost:8080/api/tasker";
@@ -23,6 +25,26 @@ const TaskerPage = () => {
     const [phone, setPhone] = useState('');
 
 
+    const [aboutClicked, setAboutClicked] = useState(false);
+	const handleAboutNavigation = () => {
+		setAboutClicked(false);
+        setTaskOffersClicked(true);
+        setAcceptedTask(true);
+	}
+
+    const [taskoffersClicked, setTaskOffersClicked] = useState(true);
+    const handleTaskOffersNavigation = () => {
+        setTaskOffersClicked(false);
+        setAboutClicked(true);
+        setAcceptedTask(true);
+    }
+
+    const [acceptedTask, setAcceptedTask] = useState([true]);
+    const handleAcceptedTasksNavigation = () => {
+        setAcceptedTask(false);
+        setAboutClicked(true);
+        setTaskOffersClicked(true);
+    }
 
 
     useEffect(() => {
@@ -121,113 +143,145 @@ const TaskerPage = () => {
 
     return (
 
-        <div className=' w-[100vw] h-[100vh] flex'>
-            <div className='w-[20%] h-[95%] bg-pink-400 ml-6 mt-2 rounded-xl flex flex-col items-center justify-center shadow-lg transform transition-transform hover:scale-105'>
 
-                <div className=' h-auto w-auto overflow-hidden shadow-lg bg-yellow-300 my-12 '>
+        <div className=' w-[100vw] h-[100vh] flex'>
+            <div className='w-[20%] h-[95%] bg-gray-600 ml-6 mt-2 rounded-xl flex flex-col items-center justify-center shadow-lg transform transition-transform hover:scale-105'>
+
+                <div className=' h-auto w-auto overflow-hidden'>
                     <img
                         className='w-17 h-17 rounded-full  p-2 top-5 left-2 bottom-5'
-                        src='https://www.pngkey.com/png/full/114-1149878_setting-user-avatar-in-specific-size-without-breaking.png'
+                        src={pfp}
                         alt='Profile'
                     />
+                    <p className='text-20 font-calibari text-gray-200  hover:text-black cursor-pointer py-5 transform transition-transform hover:scale-105' 
+                        onClick={handleAboutNavigation}>
+                        About
+                    </p>
+
+                    <p className='text-20 font-calibari text-gray-200  hover:text-black cursor-pointer py-5 transform transition-transform hover:scale-105' 
+                        onClick={handleTaskOffersNavigation}>
+                        Task Offers
+                    </p>
+
+                    <p className='text-20 font-calibari text-gray-200  hover:text-black cursor-pointer py-5 transform transition-transform hover:scale-105' 
+                        onClick={handleAcceptedTasksNavigation}>
+                        Accepted Tasks
+                    </p>
 
                 </div>
 
-
-                <input
-                    className='mt-10 text-3xl text-center text-white bg-transparent'
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                />
-
-
-
-
+                
             </div>
 
-
-
-            {/* right */}
-            <div className=' w-[80%] h-[95%] m-2 bg-pink-200 rounded-xl'>
-
-
-                <div className='  border-red-600 border'>
-
-                    <div>
-                        <label>Area:</label>
-                        <input
-                            type="text"
-                            value={area}
-                            onChange={(e) => setArea(e.target.value)}
-                        />
+            {!aboutClicked && (
+                <div class="flex-cols items-center justify-center bg-white max-w-2xl shadow overflow-hidden sm:rounded-lg">
+                    <div class="px-4 py-5 sm:px-6">
+                        <h3 class="text-lg leading-6 font-medium text-gray-900">
+                            Personal Informations
+                        </h3>
+                        <p class="mt-1 max-w-2xl text-sm text-gray-500">
+                            Details and informations about tasker.
+                        </p>
                     </div>
-
-                    <div>
-                        <label>Role:</label>
-                        <input
-                            type="text"
-                            value={role}
-                            onChange={(e) => setRole(e.target.value)}
-                        />
-                    </div>
-
-                    <div>
-                        <label>Minimum Wage Per Hour:</label>
-                        <input
-                            type="number"
-                            value={minWagePerHour}
-                            onChange={(e) => setMinWagePerHour(e.target.value)}
-                        />
-                    </div>
-
-                    <div>
-                        <label>Phone:</label>
-                        <input
-                            type="text"
-                            value={phone}
-                            onChange={(e) => setPhone(e.target.value)}
-                        />
+                    <div class="border-t border-gray-200 flex ml-100">
+                        <dl>
+                            <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                <dt class="text-sm font-medium text-gray-500">
+                                    Full name
+                                </dt>
+                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                    {name}
+                                </dd>
+                            </div>
+                            <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                <dt class="text-sm font-medium text-gray-500">
+                                    Area
+                                </dt>
+                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                    {area}
+                                </dd>
+                            </div>
+                            <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                <dt class="text-sm font-medium text-gray-500">
+                                    Role
+                                </dt>
+                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                    {role}
+                                </dd>
+                            </div>
+                            <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                <dt class="text-sm font-medium text-gray-500">
+                                    Minimum Wage Per Hour
+                                </dt>
+                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                    {minWagePerHour} Taka
+                                </dd>
+                            </div>
+                            <div class="bg-gray-50 px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                <dt class="text-sm font-medium text-gray-500">
+                                    Phone Number
+                                </dt>
+                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                    {phone}
+                                </dd>
+                            </div>
+                        </dl>
                     </div>
                 </div>
-                <div className=' overflow-y-scroll border border-red-500 h-60'>
-                    <p>task Offers</p>
-                    {Array.isArray(tasks) && tasks.map((task, index) => (
-                        <div key={index} className=' m-3 bg-white'>
-                            {console.log(task)}
-                            <h2>{task?.title}</h2>
-                            <p>{task?.description}</p>
-                            <p>{task?.wage}</p>
-                            <p>{task?.area}</p>
-                            <p>{task?.date}</p>
-                            <p>{task?.time_of_the_day}</p>
-                            <p>{task?.duration}</p>
-                            <p>{task?.status}</p>
+            )}
 
-                            <button className=' bg-green-400 m-1' onClick={() => handleAccept(task.taskId)}>Accept</button>
-                            <button className=' bg-red-500 m-1' onClick={() => handleReject(task.taskId)}>Reject</button>
-                        </div>
-                    ))}
+            {!taskoffersClicked && (
+                <div className=' w-[80%] h-[95%] m-2 bg-white rounded-xl'>
+                    <div className=' overflow-y-scroll border  h-[100%]'>
+                        <h5 class=" text-3xl leading-6 font-medium  text-gray-900">
+                            Task Offers
+                        </h5>
+                        {Array.isArray(tasks) && tasks.map((task, index) => (
+                            <div key={index} className=' m-3 bg-white'>
+                                {console.log(task)}
+                                <h2>{task?.title}</h2>
+                                <p>{task?.description}</p>
+                                <p>{task?.wage}</p>
+                                <p>{task?.area}</p>
+                                <p>{task?.date}</p>
+                                <p>{task?.time_of_the_day}</p>
+                                <p>{task?.duration}</p>
+                                <p>{task?.status}</p>
+
+                                <button onClick={() => handleAccept(task.taskId)} data-modal-hide="static-modal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Accept</button>
+                                <button onClick={() => handleReject(task.taskId)} data-modal-hide="static-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Decline</button>
+
+                                {/* <button className=' bg-green-400 m-1' onClick={() => handleAccept(task.taskId)}>Accept</button>
+                                <button className=' bg-red-500 m-1' onClick={() => handleReject(task.taskId)}>Reject</button> */}
+                            </div>
+                        ))}
+                    </div>
                 </div>
+            )}
 
+            {!acceptedTask && (
+                <div className=' w-[80%] h-[95%] m-2 bg-white rounded-xl'>
+                    <div className=' overflow-y-scroll border border-gray-100 h-[100%]'>
+                        <h5 class=" text-3xl leading-6 font-medium  text-gray-900">
+                            Accepted Tasks
+                        </h5>
+                        {Array.isArray(acceptedTasks) && acceptedTasks.map((task, index) => (
+                            <div key={index} className=' m-3 bg-white'>
+                                {console.log(task)}
+                                <h2>{task?.title}</h2>
+                                <p>{task?.description}</p>
+                                <p>{task?.wage}</p>
+                                <p>{task?.area}</p>
+                                <p>{task?.date}</p>
+                                <p>{task?.time_of_the_day}</p>
+                                <p>{task?.duration}</p>
+                                <p>{task?.status}</p>
 
-                <div className=' overflow-y-scroll border border-red-500 h-60'>
-                    <p>Accepted Tasks</p>
-                    {Array.isArray(acceptedTasks) && acceptedTasks.map((task, index) => (
-                        <div key={index} className=' m-3 bg-white'>
-                            {console.log(task)}
-                            <h2>{task?.title}</h2>
-                            <p>{task?.description}</p>
-                            <p>{task?.wage}</p>
-                            <p>{task?.area}</p>
-                            <p>{task?.date}</p>
-                            <p>{task?.time_of_the_day}</p>
-                            <p>{task?.duration}</p>
-                            <p>{task?.status}</p>
-
-                        </div>
-                    ))}
+                            </div>
+                        ))}
+                    </div>
                 </div>
-            </div>
+            )}
         </div>
     )
 }
