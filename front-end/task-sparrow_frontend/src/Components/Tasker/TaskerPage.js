@@ -108,6 +108,15 @@ const TaskerPage = () => {
                 alert("Task accepted successfully");
 
                 setTasks(tasks => tasks.filter(task => task.taskId !== taskId));
+
+                fetch(`${TASK_API}/find/accepted/${taskerId}`)
+                            .then(response => response.json())
+                            .then(data => {
+                                console.log(data)
+                                setAcceptedTasks(data)
+                            })
+                            .catch(error => console.error(error));
+
             }
 
 

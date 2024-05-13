@@ -4,6 +4,11 @@ import { useState, useEffect, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import UserContext from './Context/UserContext';
 import axios from 'axios';
+import {
+    faHammer
+} from "@fortawesome/free-solid-svg-icons";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 const PROFILE_API = "http://localhost:8080/api/user/profile";
 const TASK_API = "http://localhost:8080/api/task";
@@ -26,6 +31,7 @@ const ProfilePage = () => {
     const [email, setEmail] = useState(user ? user.email : 'johndoe@example.com');
     const [location, setLocation] = useState('New York, USA');
     const [selectedFile, setSelectedFile] = useState(null);
+    const [taskerId, setTaskerId] = useState(null);
 
 
     const [pendingTasks, setPendingTasks] = useState([]);
@@ -33,20 +39,6 @@ const ProfilePage = () => {
 
     const [availableTaskers, setAvailableTaskers] = useState([]);
 
-    // const [task, setTask] = useState({
-    //     taskId : null,
-    //     title: '',
-    //     description: '',
-    //     userId: user?.id,
-    //     taskerId: '',
-    //     taskerRole: '',
-    //     wage: 0,
-    //     area: '',
-    //     date: '',
-    //     time_of_the_day: '',
-    //     duration: 0,
-    //     status: 'PENDING'
-    // });
 
     const [currentTaskId, setCurrentTaskId] = useState(null);
     const [title, setTitle] = useState('');
@@ -58,12 +50,7 @@ const ProfilePage = () => {
     const [time_of_the_day, setTime_of_the_day] = useState('');
     const [duration, setDuration] = useState(0);
 
-    // const handleChange = (e) => {
-    //     setTask({
-    //         ...task,
-    //         [e.target.name]: e.target.value
-    //     });
-    // };
+
 
     const handleSubmit = (e) => {
         //e.preventDefault();
@@ -84,54 +71,54 @@ const ProfilePage = () => {
             status: 'PENDING'
         }
 
-        console.log("task request " , req);
+        console.log("task request ", req);
 
-        if(req.userId !== null && req.status === 'PENDING'){
+        if (req.userId !== null && req.status === 'PENDING') {
             axios.post(`${TASK_API}/create`, req)
-        .then(response => {
-            console.log('Task created:', response.data);
+                .then(response => {
+                    console.log('Task created:', response.data);
 
-            // setTask(response.data);
-            setCurrentTaskId(response.data.taskId);
-            
-            let role = response.data.taskerRole;
+                    // setTask(response.data);
+                    setCurrentTaskId(response.data.taskId);
 
-            console.log("role : ", role);
+                    let role = response.data.taskerRole;
 
-            fetch(`${TASKER_API}/role/${role}`)
-                .then(response => response.json())
-                .then(data => {
-                    console.log("available taskers : ",data)
-                    setAvailableTaskers(data)
+                    console.log("role : ", role);
+
+                    fetch(`${TASKER_API}/role/${role}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log("available taskers : ", data)
+                            setAvailableTaskers(data)
+                        })
+                        .catch(error => console.error(error));
+
+
+
+                    // Clear the form
+                    // setTask({
+                    //     taskId : null,
+                    //     title: '',
+                    //     description: '',
+                    //     userId: user?.id,
+                    //     taskerId: '',
+                    //     taskerRole: '',
+                    //     wage: 0,
+                    //     area: '',
+                    //     date: '',
+                    //     time_of_the_day: '',
+                    //     duration: 0,
+                    //     status: 'PENDING'
+                    // });
                 })
-                .catch(error => console.error(error));
-
-
-
-            // Clear the form
-            // setTask({
-            //     taskId : null,
-            //     title: '',
-            //     description: '',
-            //     userId: user?.id,
-            //     taskerId: '',
-            //     taskerRole: '',
-            //     wage: 0,
-            //     area: '',
-            //     date: '',
-            //     time_of_the_day: '',
-            //     duration: 0,
-            //     status: 'PENDING'
-            // });
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+                .catch(error => {
+                    console.error('Error:', error);
+                });
         }
-        else{
+        else {
             console.log("task not submitted");
         }
-        
+
     };
 
 
@@ -139,27 +126,27 @@ const ProfilePage = () => {
         console.log('Tasker ID:', taskerId);
 
         console.log("current task id : ", currentTaskId);
-    
-        axios.post(`${TASK_API}/update?taskId=${currentTaskId}&taskerId=${taskerId}`)
-        .then(response => {
-            console.log('Task updated:', response.data);
-            setCurrentTaskId(null);
-            setAvailableTaskers([]);
-            setTaskerRole('');
-            setTitle('');
-            setDescription('');
-            setWage(0);
-            setArea('');
-            setDate('');
-            setTime_of_the_day('');
-            setDuration(0);
 
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+        axios.post(`${TASK_API}/update?taskId=${currentTaskId}&taskerId=${taskerId}`)
+            .then(response => {
+                console.log('Task updated:', response.data);
+                setCurrentTaskId(null);
+                setAvailableTaskers([]);
+                setTaskerRole('');
+                setTitle('');
+                setDescription('');
+                setWage(0);
+                setArea('');
+                setDate('');
+                setTime_of_the_day('');
+                setDuration(0);
+
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
     };
-    
+
 
 
 
@@ -174,11 +161,21 @@ const ProfilePage = () => {
                 setContact(data.contact || '+1 234 567 890');
                 setLocation(data.address || 'New York, USA');
                 setSelectedFile(data.profileImage || null);
-                // setTask({userId: user.id});
+
             })
             .catch(error => console.error(error));
 
         if (user && user.id) {
+            fetch(`${TASKER_API}/userId/${user?.id}`)
+                .then(response => response.json())
+                .then(tasker => {
+                    console.log("fetch Tasker : ", tasker);
+                    setTaskerId(tasker.tasker_id);
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+
             fetch(`${TASK_API}/find/pending/user/${user?.id}`)
                 .then(response => response.json())
                 .then(data => {
@@ -187,7 +184,6 @@ const ProfilePage = () => {
                 })
                 .catch(error => console.error(error));
 
-
             fetch(`${TASK_API}/find/accepted/user/${user?.id}`)
                 .then(response => response.json())
                 .then(data => {
@@ -195,10 +191,8 @@ const ProfilePage = () => {
                     setAcceptedTasks(data)
                 })
                 .catch(error => console.error(error));
-
         }
-
-    }, [user]);
+    }, [user]); // Dependencies array is here
 
 
     const handleDeleteTask = async (taskId) => {
@@ -437,6 +431,34 @@ const ProfilePage = () => {
                         </div>
                     ))}
                 </div>
+
+                {
+                    !taskerId && (
+                        <button
+                            className="mr-10 px-5 py-3 text-white border border-transparent rounded-full bg-black outline-none transition-all duration-400 hover:bg-indigo-200 hover:text-black text-lg font-semibold tracking-wide cursor-pointer"
+                            type="button"
+                            onClick={() => navigate('/get/info/tasker')}
+                        >
+                            <FontAwesomeIcon icon={faHammer} className="mr-2" />
+                            Become a Tasker
+                        </button>
+                    )
+                }
+
+                {
+                    taskerId && (
+                        <div>
+                            <button
+                                className="mr-10 px-5 py-3 text-white border border-transparent rounded-full bg-black outline-none transition-all duration-400 hover:bg-indigo-200 hover:text-black text-lg font-semibold tracking-wide cursor-pointer"
+                                type="button"
+                                onClick={() => navigate('/tasker')}
+                            >
+                                Tasker Dashboard
+                            </button>
+                        </div>
+                    )
+                }
+
 
             </div>
 

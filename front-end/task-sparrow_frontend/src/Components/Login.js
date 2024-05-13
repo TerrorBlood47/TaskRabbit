@@ -20,10 +20,17 @@ const Login = () => {
         try {
             const response = await axios.get(`${API}/login?email=${email}&password=${password}`);
             console.log("response : ", response);
-
-            setUser(response.data);
-
-            navigate('/profile');
+            
+            if(response.data.status !== false){
+                setUser(response.data);
+    
+                setEmail('');
+                setPassword('');
+    
+                navigate('/profile');
+            }else{
+                alert(response.data.message);
+            }
 
         } catch (error) {
             console.log("catch error : ", error);

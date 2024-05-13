@@ -43,6 +43,7 @@ public class TaskerController {
 		tasker.setArea(req.getArea());
 		tasker.setMinWagePerHour(req.getMinWagePerHour());
 		tasker.setUserId(req.getUserId());
+		tasker.setPhoneNumber(req.getPhoneNumber());
 		
 		return ResponseEntity.ok(taskerRepository.save(tasker));
 	}
