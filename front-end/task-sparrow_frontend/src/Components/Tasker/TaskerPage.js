@@ -2,6 +2,12 @@ import React from 'react';
 import { useState, useEffect, useContext } from 'react';
 import UserContext from '../Context/UserContext';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import {
+	faHome,
+} from "@fortawesome/free-solid-svg-icons";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 import pfp from '../../Assets/zisan.jpg';
 
@@ -44,6 +50,12 @@ const TaskerPage = () => {
         setAcceptedTask(false);
         setAboutClicked(true);
         setTaskOffersClicked(true);
+    }
+
+    const navigate = useNavigate();
+
+    const handleHomeNavigation = () => {
+        navigate('/');
     }
 
 
@@ -175,6 +187,11 @@ const TaskerPage = () => {
                     <p className='text-20 font-calibari text-gray-200  hover:text-black cursor-pointer py-5 transform transition-transform hover:scale-105' 
                         onClick={handleAcceptedTasksNavigation}>
                         Accepted Tasks
+                    </p>
+
+                    <p className='text-20 font-calibari text-gray-200  hover:text-black cursor-pointer py-5 transform transition-transform hover:scale-105' 
+                        onClick={handleHomeNavigation}>
+                        Home
                     </p>
 
                 </div>

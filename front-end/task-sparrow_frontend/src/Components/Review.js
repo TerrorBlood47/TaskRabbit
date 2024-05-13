@@ -4,8 +4,8 @@ const Review = () => {
    return ( 
         <div class="mt-6 divide-y divide-gray-200 dark:divide-gray-700">
             <div class="gap-3 pb-6 sm:flex sm:items-start">
-                <div class="shrink-0 space-y-2 sm:w-48 md:w-72">
-                    <div class="flex items-center gap-0.5">
+                <div class="flex flex-col justify-between shrink-0 space-y-2 sm:w-48 md:w-72">
+                    <div class="flex items-center justify-center gap-0.5">
                         <svg class="h-4 w-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                         <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
                         </svg>
@@ -28,38 +28,106 @@ const Review = () => {
                     </div>
 
                     <div class="space-y-0.5">
-                        <p class="text-base font-semibold text-gray-900 dark:text-white">Micheal Gough</p>
-                        <p class="text-sm font-normal text-gray-500 dark:text-gray-400">November 18 2023 at 15:35</p>
-                    </div>
-
-                    <div class="inline-flex items-center gap-1">
-                        <svg class="h-5 w-5 text-primary-700 dark:text-primary-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                        <path
-                            fill-rule="evenodd"
-                            d="M12 2c-.791 0-1.55.314-2.11.874l-.893.893a.985.985 0 0 1-.696.288H7.04A2.984 2.984 0 0 0 4.055 7.04v1.262a.986.986 0 0 1-.288.696l-.893.893a2.984 2.984 0 0 0 0 4.22l.893.893a.985.985 0 0 1 .288.696v1.262a2.984 2.984 0 0 0 2.984 2.984h1.262c.261 0 .512.104.696.288l.893.893a2.984 2.984 0 0 0 4.22 0l.893-.893a.985.985 0 0 1 .696-.288h1.262a2.984 2.984 0 0 0 2.984-2.984V15.7c0-.261.104-.512.288-.696l.893-.893a2.984 2.984 0 0 0 0-4.22l-.893-.893a.985.985 0 0 1-.288-.696V7.04a2.984 2.984 0 0 0-2.984-2.984h-1.262a.985.985 0 0 1-.696-.288l-.893-.893A2.984 2.984 0 0 0 12 2Zm3.683 7.73a1 1 0 1 0-1.414-1.413l-4.253 4.253-1.277-1.277a1 1 0 0 0-1.415 1.414l1.985 1.984a1 1 0 0 0 1.414 0l4.96-4.96Z"
-                            clip-rule="evenodd"
-                        />
-                        </svg>
-                        <p class="text-sm font-medium text-gray-900 dark:text-white">Verified purchase</p>
+                        <p class="text-base font-semibold text-gray-900 dark:text-white">Abdullah Al mahmud</p>
+                        <p class="text-sm font-normal text-gray-500 dark:text-gray-400">April 18 2024 at 15:35</p>
                     </div>
                 </div>
 
                 <div class="mt-4 min-w-0 flex-1 space-y-4 sm:mt-0">
-                    <p class="text-base font-normal text-gray-500 dark:text-gray-400">My old IMAC was from 2013. This replacement was well needed. Very fast, and the colour matches my office set up perfectly. The display is out of this world and I’m very happy with this purchase.</p>
+                    <p class="text-base font-normal text-gray-500 dark:text-gray-400">This is a good website, provide service faster.</p>
+                </div>
+            </div>
 
-                    <div class="flex items-center gap-4">
-                        <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Was it helpful to you?</p>
-                        <div class="flex items-center">
-                            <input id="reviews-radio-1" type="radio" value="" name="reviews-radio" class="h-4 w-4 border-gray-300 bg-gray-100 text-primary-600 focus:ring-2 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-primary-600" />
-                            <label for="reviews-radio-1" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"> Yes: 3 </label>
-                        </div>
-                        <div class="flex items-center">
-                            <input id="reviews-radio-2" type="radio" value="" name="reviews-radio" class="h-4 w-4 border-gray-300 bg-gray-100 text-primary-600 focus:ring-2 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-primary-600" />
-                            <label for="reviews-radio-2" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">No: 0 </label>
-                        </div>
+            <div class="gap-3 pb-6 sm:flex sm:items-start">
+                <div class="flex flex-col justify-between shrink-0 space-y-2 sm:w-48 md:w-72">
+                    <div class="flex items-center justify-center gap-0.5">
+                        <svg class="h-4 w-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
+                        </svg>
+
+                        <svg class="h-4 w-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
+                        </svg>
+
+                        <svg class="h-4 w-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
+                        </svg>
+
+                        <svg class="h-4 w-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
+                        </svg>
                     </div>
+
+                    <div class="space-y-0.5">
+                        <p class="text-base font-semibold text-gray-900 dark:text-white">Waki As Sami</p>
+                        <p class="text-sm font-normal text-gray-500 dark:text-gray-400">April 22 2024 at 15:35</p>
+                    </div>
+                </div>
+
+                <div class="mt-4 min-w-0 flex-1 space-y-4 sm:mt-0">
+                    <p class="text-base font-normal text-gray-500 dark:text-gray-400">TaskSparrow has been a game-changer for me! As a freelancer, finding quality gigs was always a challenge, but TaskSparrow's platform made it easy. The interface is intuitive, the payment system is secure, and the support team is responsive. Highly recommended!</p>
+                </div>
+            </div>
+
+            <div class="gap-3 pb-6 sm:flex sm:items-start">
+                <div class="flex flex-col justify-between shrink-0 space-y-2 sm:w-48 md:w-72">
+                    <div class="flex items-center justify-center gap-0.5">
+                        <svg class="h-4 w-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
+                        </svg>
+
+                        <svg class="h-4 w-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
+                        </svg>
+
+                        <svg class="h-4 w-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
+                        </svg>
+
+                        <svg class="h-4 w-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
+                        </svg>
+                    </div>
+
+                    <div class="space-y-0.5">
+                        <p class="text-base font-semibold text-gray-900 dark:text-white">Md. Sadman Sakib</p>
+                        <p class="text-sm font-normal text-gray-500 dark:text-gray-400">April 23 2024 at 15:35</p>
+                    </div>
+                </div>
+
+                <div class="mt-4 min-w-0 flex-1 space-y-4 sm:mt-0">
+                    <p class="text-base font-normal text-gray-500 dark:text-gray-400">I've been using TaskSparrow for a few months now, and I'm impressed by the variety of tasks available. Whether you're a graphic designer, writer, or handyman, there's something for everyone. Plus, the rating system ensures that you're working with reputable clients. Love it!</p>
+                </div>
+            </div>
+
+            <div class="gap-3 pb-6 sm:flex sm:items-start">
+                <div class="flex flex-col justify-between shrink-0 space-y-2 sm:w-48 md:w-72">
+                    <div class="flex items-center justify-center gap-0.5">
+                        <svg class="h-4 w-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
+                        </svg>
+
+                        <svg class="h-4 w-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
+                        </svg>
+
+                        <svg class="h-4 w-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M13.849 4.22c-.684-1.626-3.014-1.626-3.698 0L8.397 8.387l-4.552.361c-1.775.14-2.495 2.331-1.142 3.477l3.468 2.937-1.06 4.392c-.413 1.713 1.472 3.067 2.992 2.149L12 19.35l3.897 2.354c1.52.918 3.405-.436 2.992-2.15l-1.06-4.39 3.468-2.938c1.353-1.146.633-3.336-1.142-3.477l-4.552-.36-1.754-4.17Z" />
+                        </svg>
+                    </div>
+
+                    <div class="space-y-0.5">
+                        <p class="text-base font-semibold text-gray-900 dark:text-white">Rafi Al Saad</p>
+                        <p class="text-sm font-normal text-gray-500 dark:text-gray-400">April 26 2024 at 15:35</p>
+                    </div>
+                </div>
+
+                <div class="mt-4 min-w-0 flex-1 space-y-4 sm:mt-0">
+                    <p class="text-base font-normal text-gray-500 dark:text-gray-400">TaskSparrow offers a solid platform for freelancers seeking opportunities in today's gig economy. With its intuitive interface and diverse range of tasks, it simplifies the process of finding work across various skill sets. The rating system provides transparency and helps users identify reputable clients, fostering trust within the community. While occasional technical glitches can be frustrating, TaskSparrow's responsive support team is quick to address issues, ensuring a positive user experience overall. As a freelancer, I appreciate the convenience and reliability that TaskSparrow brings to the table, making it a valuable tool in my professional toolkit.</p>
                 </div>
             </div>
         </div>
    );
 }
+
+export default Review;

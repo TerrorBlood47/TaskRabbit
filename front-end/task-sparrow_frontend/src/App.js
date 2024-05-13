@@ -8,6 +8,7 @@ import UserContext from './Components/Context/UserContext';
 import ProfilePage from './Components/ProfilePage';
 import GetTaskerInfoPage from './Components/Tasker/GetTaskerInfoPage';
 import TaskerPage from './Components/Tasker/TaskerPage';
+import PrivacyPolicy from './Components/PrivacyPolicy';
 
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
                     <Route path="/profile" element={<ProfilePage/>} />
                     <Route path="/get/info/tasker" element={<GetTaskerInfoPage/>} />
                     <Route path="/tasker" element={<TaskerPage/>} />
+                    <Route path="/privacy-policy" element={<PrivacyPolicy/>} />
 
                 </Routes>
             </UserContext.Provider>
