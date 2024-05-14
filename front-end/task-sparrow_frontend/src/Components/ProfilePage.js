@@ -159,7 +159,7 @@ const ProfilePage = () => {
                 setContact(data.contact || '');
                 setLocation(data.address || '');
                 setSelectedFile(data.profileImage || null);
-                
+
                 if (data.profileImage) {
                     downloadProfileImage(user?.id);
                 }
@@ -220,40 +220,40 @@ const ProfilePage = () => {
 
 
     const uploadProfileImage = async (imageFile) => {
-            const formData = new FormData();
-            formData.append('image', imageFile);
-        
-            try {
-                console.log('Uploading image... user id : ', user?.id);
-                const response = await axios.post(`${PROFILE_API}/upload/image/${user?.id}`, formData, {
-                    headers: {
-                        'Content-Type': 'multipart/form-data'
-                    }
-                });
-        
-                if (response.status === 200) {
-                    // The image was uploaded successfully
-                    // The response data is the updated profile
-                    const profile = response.data;
-                    console.log('Profile:', profile);
-                } else {
-                    // The server responded with a status other than 200
-                    console.error('Error uploading image:', response);
+        const formData = new FormData();
+        formData.append('image', imageFile);
+
+        try {
+            console.log('Uploading image... user id : ', user?.id);
+            const response = await axios.post(`${PROFILE_API}/upload/image/${user?.id}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
                 }
-            } catch (error) {
-                // An error occurred while uploading the image
-                console.error('Error uploading image:', error);
+            });
+
+            if (response.status === 200) {
+                // The image was uploaded successfully
+                // The response data is the updated profile
+                const profile = response.data;
+                console.log('Profile:', profile);
+            } else {
+                // The server responded with a status other than 200
+                console.error('Error uploading image:', response);
             }
+        } catch (error) {
+            // An error occurred while uploading the image
+            console.error('Error uploading image:', error);
+        }
     };
 
     const downloadProfileImage = async (userId) => {
         try {
             const response = await fetch(`${PROFILE_API}/download/image/${userId}`);
-    
+
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-    
+
             const blob = await response.blob();
             const imageUrl = URL.createObjectURL(blob);
             setImgSrc(imageUrl);
@@ -274,7 +274,7 @@ const ProfilePage = () => {
 
     //image set
 
-    
+
 
     const handleImageChange = (event) => {
         const file = event.target.files[0];
@@ -355,7 +355,7 @@ const ProfilePage = () => {
                         <p onClick={handleMoreNavigation}> More</p>
                     </div>
                 </div>
-                <div > 
+                <div >
                     <div className=' max-w-[17vw] max-h-[20vh] overflow-hidden mt-5 flex justify-center items-center'>
                         <img
                             className='w-[85%] h-[85%] rounded-full  p-2 left-2 right-2'
@@ -378,8 +378,8 @@ const ProfilePage = () => {
                                     <p>Name</p>
                                 </span>
                                 <input
-                                    variant = "standard"
-                                    label = "Standard"
+                                    variant="standard"
+                                    label="Standard"
                                     className='text-center text-lg text-white bg-transparent bd=1w-full border-b border-gray-700 focus:border-gray-300 px-2 outline-none'
                                     value={name}
                                     placeholder='Name'
@@ -394,8 +394,8 @@ const ProfilePage = () => {
                                     <p>Role</p>
                                 </span>
                                 <input
-                                    variant = "standard"
-                                    label = "Standard"
+                                    variant="standard"
+                                    label="Standard"
                                     className='text-center text-lg text-white bg-transparent bd=1w-full border-b border-gray-700 focus:border-gray-300 px-2 outline-none'
                                     value={profession}
                                     placeholder='Profession'
@@ -410,8 +410,8 @@ const ProfilePage = () => {
                                     <p>Mobile</p>
                                 </span>
                                 <input
-                                    variant = "standard"
-                                    label = "Standard"
+                                    variant="standard"
+                                    label="Standard"
                                     className='text-center text-lg text-white bg-transparent bd=1w-full border-b border-gray-700 focus:border-gray-300 px-2 outline-none'
                                     value={contact}
                                     placeholder='Contact'
@@ -423,11 +423,11 @@ const ProfilePage = () => {
                         <div className="my-5">
                             <div class="flex">
                                 <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
-                                    <p>Email</p>
+                                    <p>Address</p>
                                 </span>
                                 <input
-                                    variant = "standard"
-                                    label = "Standard"
+                                    variant="standard"
+                                    label="Standard"
                                     className='text-center text-lg text-white bg-transparent bd=1w-full border-b border-gray-700 focus:border-gray-300 px-2 outline-none'
                                     value={email}
                                     placeholder='Email'
@@ -442,8 +442,8 @@ const ProfilePage = () => {
                                     <p>Email</p>
                                 </span>
                                 <input
-                                    variant = "standard"
-                                    label = "Standard"
+                                    variant="standard"
+                                    label="Standard"
                                     className='text-center text-lg text-white bg-transparent bd=1w-full border-b border-gray-700 focus:border-gray-300 px-2 outline-none'
                                     value={location}
                                     placeholder='Location'
@@ -451,13 +451,13 @@ const ProfilePage = () => {
                                 />
                             </div>
                         </div>
-                    </div>    
-                </div>    
+                    </div>
+                </div>
 
                 <Button
                     onClick={handleProfileUpdate}
                     className="mr-10 px-5 py-3 text-white border border-transparent rounded-full bg-black outline-none transition-all duration-400 hover:bg-indigo-200 hover:text-black text-lg font-semibold tracking-wide cursor-pointer"
-                    >
+                >
                     Update Profile
                 </Button>
 
@@ -468,200 +468,200 @@ const ProfilePage = () => {
                     <FontAwesomeIcon icon={faSignOut} className="mr-2" />
                 </Button>
             </div>
-            
+
 
 
 
             {/* right */}
-            { !moreClicked && (
-            <div className=' w-[80%] h-[95%] m-2 bg-white rounded-xl '>
-                
-                <div className='flex justify-end mb-5'>
-                {
-                    !taskerId && (
-                        <button
-                            className="mr-10 px-5 py-3 text-white border border-transparent rounded-full bg-black outline-none transition-all duration-400 hover:bg-indigo-200 hover:text-black text-lg font-semibold tracking-wide cursor-pointer"
-                            type="button"
-                            onClick={() => navigate('/get/info/tasker')}
-                        >
-                            <FontAwesomeIcon icon={faHammer} className="mr-2" />
-                            Become a Tasker
-                        </button>
-                    )
-                }
+            {!moreClicked && (
+                <div className=' w-[80%] h-[95%] m-2 bg-white rounded-xl '>
 
-                {
-                    taskerId && (
-                        <div>
-                            <button
-                                className="mr-10 px-5 py-3 text-white border border-transparent rounded-full bg-black outline-none transition-all duration-400 hover:bg-indigo-200 hover:text-black text-lg font-semibold tracking-wide cursor-pointer"
-                                type="button"
-                                onClick={() => navigate('/tasker')}
-                            >
-                                Tasker Dashboard
-                            </button>
-                        </div>
-                    )
-                }
-                </div>
-                <h5 class=" text-3xl bg-blue-100 py-10 leading-6 font-medium  text-gray-900">
-                    Task Offers
-                </h5>
-                <div className=' overflow-y-scroll border mt-5  h-60'>
-                    
-                    {Array.isArray(pendingTasks) && pendingTasks.map((task, index) => (
-                        <div key={index} className={`m-3 ${index % 2 === 0 ? 'bg-gray-300' : 'bg-white'} p-5 rounded-lg hover:scale-105` }>
-                            <h2 className="text-xl font-semibold">{task?.title}</h2>
-                            <p className="text-gray-700">{task?.description}</p>
-                            <div className="grid grid-cols-2 gap-2 mt-2">
-                                <p><span className="font-semibold">Wage:</span> {task?.wage}</p>
-                                <p><span className="font-semibold">Area:</span> {task?.area}</p>
-                                <p><span className="font-semibold">Date:</span> {task?.date}</p>
-                                <p><span className="font-semibold">Time of the Day:</span> {task?.time_of_the_day}</p>
-                                <p><span className="font-semibold">Duration:</span> {task?.duration}</p>
-                                <p><span className="font-semibold">Status:</span> {task?.status}</p>
-                            </div>
-                            <div className="mt-4">
-                                <button onClick={() => handleDeleteTask(task.taskId)} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-3 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                    Delete Task
+                    <div className='flex justify-end mb-5'>
+                        {
+                            !taskerId && (
+                                <button
+                                    className="mr-10 px-5 py-3 text-white border border-transparent rounded-full bg-black outline-none transition-all duration-400 hover:bg-indigo-200 hover:text-black text-lg font-semibold tracking-wide cursor-pointer"
+                                    type="button"
+                                    onClick={() => navigate('/get/info/tasker')}
+                                >
+                                    <FontAwesomeIcon icon={faHammer} className="mr-2" />
+                                    Become a Tasker
                                 </button>
-                                
+                            )
+                        }
+
+                        {
+                            taskerId && (
+                                <div>
+                                    <button
+                                        className="mr-10 px-5 py-3 text-white border border-transparent rounded-full bg-black outline-none transition-all duration-400 hover:bg-indigo-200 hover:text-black text-lg font-semibold tracking-wide cursor-pointer"
+                                        type="button"
+                                        onClick={() => navigate('/tasker')}
+                                    >
+                                        Tasker Dashboard
+                                    </button>
+                                </div>
+                            )
+                        }
+                    </div>
+                    <h5 class=" text-3xl bg-blue-100 py-10 leading-6 font-medium  text-gray-900">
+                        Task Offers
+                    </h5>
+                    <div className=' overflow-y-scroll border mt-5  h-60'>
+
+                        {Array.isArray(pendingTasks) && pendingTasks.map((task, index) => (
+                            <div key={index} className={`m-3 ${index % 2 === 0 ? 'bg-gray-300' : 'bg-white'} p-5 rounded-lg hover:scale-105`}>
+                                <h2 className="text-xl font-semibold">{task?.title}</h2>
+                                <p className="text-gray-700">{task?.description}</p>
+                                <div className="grid grid-cols-2 gap-2 mt-2">
+                                    <p><span className="font-semibold">Wage:</span> {task?.wage}</p>
+                                    <p><span className="font-semibold">Area:</span> {task?.area}</p>
+                                    <p><span className="font-semibold">Date:</span> {task?.date}</p>
+                                    <p><span className="font-semibold">Time of the Day:</span> {task?.time_of_the_day}</p>
+                                    <p><span className="font-semibold">Duration:</span> {task?.duration}</p>
+                                    <p><span className="font-semibold">Status:</span> {task?.status}</p>
+                                </div>
+                                <div className="mt-4">
+                                    <button onClick={() => handleDeleteTask(task.taskId)} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-3 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                        Delete Task
+                                    </button>
+
+                                </div>
                             </div>
-                        </div>
-                    ))}
-                </div>
+                        ))}
+                    </div>
 
 
 
-                <h5 class=" text-3xl leading-6 font-medium bg-blue-100 py-10  text-gray-900 mt-5">
-                    Task Accepted
-                </h5>
+                    <h5 class=" text-3xl leading-6 font-medium bg-blue-100 py-10  text-gray-900 mt-5">
+                        Task Accepted
+                    </h5>
 
-                <div className='mt-10 overflow-y-scroll h-60'>
-                    {Array.isArray(acceptedTasks) && acceptedTasks.map((task, index) => (
-                        <div key={index} className={`m-3 ${index % 2 === 0 ? 'bg-gray-300' : 'bg-white'} p-5 rounded-lg hover:scale-105` }>
-                            <h2 className="text-xl font-semibold">{task?.title}</h2>
-                            <p className="text-gray-700">{task?.description}</p>
-                            <div className="grid grid-cols-2 gap-2 mt-2">
-                                <p><span className="font-semibold">Wage:</span> {task?.wage}</p>
-                                <p><span className="font-semibold">Area:</span> {task?.area}</p>
-                                <p><span className="font-semibold">Role:</span> {task?.taskerRole}</p>
-                                <p><span className="font-semibold">Date:</span> {task?.date}</p>
-                                <p><span className="font-semibold">Time of the Day:</span> {task?.time_of_the_day}</p>
-                                <p><span className="font-semibold">Duration:</span> {task?.duration}</p>
-                                <p><span className="font-semibold">Status:</span> {task?.status}</p>
+                    <div className='mt-10 overflow-y-scroll h-60'>
+                        {Array.isArray(acceptedTasks) && acceptedTasks.map((task, index) => (
+                            <div key={index} className={`m-3 ${index % 2 === 0 ? 'bg-gray-300' : 'bg-white'} p-5 rounded-lg hover:scale-105`}>
+                                <h2 className="text-xl font-semibold">{task?.title}</h2>
+                                <p className="text-gray-700">{task?.description}</p>
+                                <div className="grid grid-cols-2 gap-2 mt-2">
+                                    <p><span className="font-semibold">Wage:</span> {task?.wage}</p>
+                                    <p><span className="font-semibold">Area:</span> {task?.area}</p>
+                                    <p><span className="font-semibold">Role:</span> {task?.taskerRole}</p>
+                                    <p><span className="font-semibold">Date:</span> {task?.date}</p>
+                                    <p><span className="font-semibold">Time of the Day:</span> {task?.time_of_the_day}</p>
+                                    <p><span className="font-semibold">Duration:</span> {task?.duration}</p>
+                                    <p><span className="font-semibold">Status:</span> {task?.status}</p>
+                                </div>
                             </div>
-                        </div>
-                    ))}
+                        ))}
+                    </div>
                 </div>
-            </div>
             )}
 
             {!searchClicked && (
-            <div className=' w-[80%] h-[95%] m-2 bg-white rounded-xl '>
-                <div className='flex justify-end mb-5'>
-                {
-                    !taskerId && (
-                        <button
-                            className="mr-10 px-5 py-3 text-white border border-transparent rounded-full bg-black outline-none transition-all duration-400 hover:bg-indigo-200 hover:text-black text-lg font-semibold tracking-wide cursor-pointer"
-                            type="button"
-                            onClick={() => navigate('/get/info/tasker')}
-                        >
-                            <FontAwesomeIcon icon={faHammer} className="mr-2" />
-                            Become a Tasker
-                        </button>
-                    )
-                }
-
-                {
-                    taskerId && (
-                        <div>
-                            <button
-                                className="mr-10 px-5 py-3 text-white border border-transparent rounded-full bg-black outline-none transition-all duration-400 hover:bg-indigo-200 hover:text-black text-lg font-semibold tracking-wide cursor-pointer"
-                                type="button"
-                                onClick={() => navigate('/tasker')}
-                            >
-                                Tasker Dashboard
-                            </button>
-                        </div>
-                    )
-                }
-                </div>
-                <div className="max-w-md mx-auto bg-gray-100 border border-transparent rounded-lg px-4 py-4">
-                    <div className="relative z-0 w-full mb-5 group">
-                        <input type='text' placeholder=' ' value={title} onChange={(e) => setTitle(e.target.value)} className="text-center block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required />
-                        <label className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Title</label>
-                    </div>
-                    <div className="relative z-0 w-full mb-5 group">
-                        <input type='text' placeholder=' ' value={description} onChange={(e) => setDescription(e.target.value)} className="text-center block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required />
-                        <label className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Description</label>
-                    </div>
-                    <div className="relative z-0 w-full mb-5 group text">
-                        <select placeholder=' ' value={taskerRole} onChange={(e) => setTaskerRole(e.target.value)} className="text-center block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
-                            <option value='' selected>Select Tasker Role</option>
-                            <option value='Cleaning'>Cleaner</option>
-                            <option value='Plumbing'>Plumber</option>
-                            <option value='Electrician'>Electrician</option>
-                        </select>
-                    </div>
-                    <div className="relative z-0 w-full mb-5 group">
-                        <input type='text' placeholder='' value={wage} onChange={(e) => setWage(e.target.value)} className="text-center block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required />
-                        <label className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Price</label>
-                    </div>
-                    <div className="relative z-0 w-full mb-5 group text">
-                        <select value={area} onChange={(e) => setArea(e.target.value)} className="text-center block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
-                            <option value='' selected>Select Area</option>
-                            <option value='Mirpur'>Mirpur</option>
-                            <option value='Uttara'>Uttara</option>
-                            <option value='Dhanmondi'>Dhanmondi</option>
-                            <option value='Rajarbagh'>Rajarbagh</option>
-                        </select>
-                    </div>
-
-                    <div className="relative z-0 w-full mb-5 group">
-                        <input type='date' placeholder=' ' value={date} onChange={(e) => setDate(e.target.value)} className="text-center block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required />
-                    </div>
-
-                    <div className="relative z-0 w-full mb-5 group">
-                        <input type='time' placeholder=' ' value={time_of_the_day} onChange={(e) => setTime_of_the_day(e.target.value)} className="text-center block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required />
-                    </div>
-                    <div className="relative z-0 w-full mb-5 group">
-                        <input type='number' placeholder=' ' value={duration} onChange={(e) => setDuration(e.target.value)} className="text-center block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required />
-                        <label className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Duration</label>
-                    </div>
-
-                    
-                    <button onClick={handleSubmit}
-                    className='mt-5 px-2 py-2 text-white border border-transparent rounded-full bg-black outline-none transition-all duration-400 hover:bg-indigo-200 hover:text-black text-lg font-semibold tracking-wide cursor-pointer'
-                    >
-                        Submit Task
-                    </button>
-                </div>
-
-                <h5 class=" text-3xl leading-6 font-medium bg-blue-100 py-10  text-gray-900 mt-5">
-                    Available Taskers
-                </h5>
-
-                <div className='mt-10 overflow-y-scroll h-60'>
-                    {Array.isArray(availableTaskers) && availableTaskers.map((tasker, index) => (
-                        <div key={index} className={`m-3 ${index % 2 === 0 ? 'bg-gray-300' : 'bg-white'} p-5 rounded-lg hover:scale-105`}>
-                            <h2 className="text-xl font-semibold">{tasker?.name}</h2>
-                            <div className="grid grid-cols-2 gap-2 mt-2">
-                                <p><span className="font-semibold">Area:</span> {tasker?.area}</p>
-                                <p><span className="font-semibold">Minimum Wage per Hour:</span> {tasker?.minWagePerHour}</p>
-                                <p><span className="font-semibold">Phone Number:</span> {tasker?.phoneNumber}</p>
-                                <p><span className="font-semibold">Role:</span> {tasker?.role}</p>
-                            </div>
-                            <div className="mt-4">
-                                <button onClick={() => handleChooseTasker(tasker?.tasker_id)} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-3 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                    Choose Tasker
+                <div className=' w-[80%] h-[95%] m-2 bg-white rounded-xl '>
+                    <div className='flex justify-end mb-5'>
+                        {
+                            !taskerId && (
+                                <button
+                                    className="mr-10 px-5 py-3 text-white border border-transparent rounded-full bg-black outline-none transition-all duration-400 hover:bg-indigo-200 hover:text-black text-lg font-semibold tracking-wide cursor-pointer"
+                                    type="button"
+                                    onClick={() => navigate('/get/info/tasker')}
+                                >
+                                    <FontAwesomeIcon icon={faHammer} className="mr-2" />
+                                    Become a Tasker
                                 </button>
-                                
-                            </div>
+                            )
+                        }
+
+                        {
+                            taskerId && (
+                                <div>
+                                    <button
+                                        className="mr-10 px-5 py-3 text-white border border-transparent rounded-full bg-black outline-none transition-all duration-400 hover:bg-indigo-200 hover:text-black text-lg font-semibold tracking-wide cursor-pointer"
+                                        type="button"
+                                        onClick={() => navigate('/tasker')}
+                                    >
+                                        Tasker Dashboard
+                                    </button>
+                                </div>
+                            )
+                        }
+                    </div>
+                    <div className="max-w-md mx-auto bg-gray-100 border border-transparent rounded-lg px-4 py-4">
+                        <div className="relative z-0 w-full mb-5 group">
+                            <input type='text' placeholder=' ' value={title} onChange={(e) => setTitle(e.target.value)} className="text-center block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required />
+                            <label className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Title</label>
                         </div>
-                    ))}
+                        <div className="relative z-0 w-full mb-5 group">
+                            <input type='text' placeholder=' ' value={description} onChange={(e) => setDescription(e.target.value)} className="text-center block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required />
+                            <label className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Description</label>
+                        </div>
+                        <div className="relative z-0 w-full mb-5 group text">
+                            <select placeholder=' ' value={taskerRole} onChange={(e) => setTaskerRole(e.target.value)} className="text-center block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
+                                <option value='' selected>Select Tasker Role</option>
+                                <option value='Cleaning'>Cleaner</option>
+                                <option value='Plumbing'>Plumber</option>
+                                <option value='Electrician'>Electrician</option>
+                            </select>
+                        </div>
+                        <div className="relative z-0 w-full mb-5 group">
+                            <input type='text' placeholder='' value={wage} onChange={(e) => setWage(e.target.value)} className="text-center block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required />
+                            <label className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Price</label>
+                        </div>
+                        <div className="relative z-0 w-full mb-5 group text">
+                            <select value={area} onChange={(e) => setArea(e.target.value)} className="text-center block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
+                                <option value='' selected>Select Area</option>
+                                <option value='Mirpur'>Mirpur</option>
+                                <option value='Uttara'>Uttara</option>
+                                <option value='Dhanmondi'>Dhanmondi</option>
+                                <option value='Rajarbagh'>Rajarbagh</option>
+                            </select>
+                        </div>
+
+                        <div className="relative z-0 w-full mb-5 group">
+                            <input type='date' placeholder=' ' value={date} onChange={(e) => setDate(e.target.value)} className="text-center block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required />
+                        </div>
+
+                        <div className="relative z-0 w-full mb-5 group">
+                            <input type='time' placeholder=' ' value={time_of_the_day} onChange={(e) => setTime_of_the_day(e.target.value)} className="text-center block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required />
+                        </div>
+                        <div className="relative z-0 w-full mb-5 group">
+                            <input type='number' placeholder=' ' value={duration} onChange={(e) => setDuration(e.target.value)} className="text-center block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required />
+                            <label className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Duration</label>
+                        </div>
+
+
+                        <button onClick={handleSubmit}
+                            className='mt-5 px-2 py-2 text-white border border-transparent rounded-full bg-black outline-none transition-all duration-400 hover:bg-indigo-200 hover:text-black text-lg font-semibold tracking-wide cursor-pointer'
+                        >
+                            Submit Task
+                        </button>
+                    </div>
+
+                    <h5 class=" text-3xl leading-6 font-medium bg-blue-100 py-10  text-gray-900 mt-5">
+                        Available Taskers
+                    </h5>
+
+                    <div className='mt-10 overflow-y-scroll h-60'>
+                        {Array.isArray(availableTaskers) && availableTaskers.map((tasker, index) => (
+                            <div key={index} className={`m-3 ${index % 2 === 0 ? 'bg-gray-300' : 'bg-white'} p-5 rounded-lg hover:scale-105`}>
+                                <h2 className="text-xl font-semibold">{tasker?.name}</h2>
+                                <div className="grid grid-cols-2 gap-2 mt-2">
+                                    <p><span className="font-semibold">Area:</span> {tasker?.area}</p>
+                                    <p><span className="font-semibold">Minimum Wage per Hour:</span> {tasker?.minWagePerHour}</p>
+                                    <p><span className="font-semibold">Phone Number:</span> {tasker?.phoneNumber}</p>
+                                    <p><span className="font-semibold">Role:</span> {tasker?.role}</p>
+                                </div>
+                                <div className="mt-4">
+                                    <button onClick={() => handleChooseTasker(tasker?.tasker_id)} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-3 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                        Choose Tasker
+                                    </button>
+
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
-            </div>
             )}
 
         </div>

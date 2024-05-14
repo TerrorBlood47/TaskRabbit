@@ -47,6 +47,16 @@ const SignUp = () => {
         };
         try {
 
+            if(!email || !password || !name){
+                alert("Please fill all the fields");
+                return;
+            }
+
+            if(password.length < 8){
+                alert("Password should be atleast 8 characters long");
+                return;
+            }
+
             if (isChecked) {
                 const response = await axios.post(`${API}/signup`, UserRequest);
                 console.log("response : ", response);
