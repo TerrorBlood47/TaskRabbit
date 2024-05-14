@@ -12,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,6 +28,9 @@ public class AuthController2 {
 	
 
 	private UserRepository userRepository;
+	
+	@Autowired
+	private JavaMailSender javaMailSender;
 	
 	
 	public AuthController2(UserService userService, UserRepository userRepository) {
@@ -65,6 +70,25 @@ public class AuthController2 {
 		}
 		System.out.println(user);
 		return ResponseEntity.ok(user);
+	}
+	
+	@PostMapping("/forget-password")
+	public ResponseEntity<?> ForgetPasswordHandler( @RequestParam String email ) {
+		User user = userRepository.findByEmail(email);
+
+		if ( user == null ){
+			return ResponseEntity.ok(new ApiResponse("User not found", false));
+		}
+		
+		SimpleMailMessage message = new SimpleMailMessage();
+		message.setFrom("ahaj-2020215611@cs.du.ac.bd");
+		message.setTo(user.getEmail());
+		message.setSubject("Password Given");
+		message.setText("Your password is : "+ user.getPassword() );
+		
+		javaMailSender.send(message);
+		
+		return ResponseEntity.ok(new ApiResponse("Password sent to your email", true));
 	}
 	
 	
