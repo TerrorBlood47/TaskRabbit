@@ -25,11 +25,11 @@ const ProfilePage = () => {
 
 
 
-    const [name, setName] = useState(user ? user.name : 'John Doe');
-    const [profession, setProfession] = useState('Software Engineer');
-    const [contact, setContact] = useState('+1 234 567 890');
-    const [email, setEmail] = useState(user ? user.email : 'johndoe@example.com');
-    const [location, setLocation] = useState('New York, USA');
+    const [name, setName] = useState(user ? user.name : '');
+    const [profession, setProfession] = useState('');
+    const [contact, setContact] = useState('');
+    const [email, setEmail] = useState(user ? user.email : '');
+    const [location, setLocation] = useState('');
     const [selectedFile, setSelectedFile] = useState(null);
     const [imgSrc, setImgSrc] = useState('https://cdn.pixabay.com/photo/2016/11/14/04/57/woman-1822656_960_720.jpg');
     const [taskerId, setTaskerId] = useState(null);
@@ -220,30 +220,30 @@ const ProfilePage = () => {
 
 
     const uploadProfileImage = async (imageFile) => {
-        const formData = new FormData();
-        formData.append('image', imageFile);
-    
-        try {
-            console.log('Uploading image... user id : ', user?.id);
-            const response = await axios.post(`${PROFILE_API}/upload/image/${user?.id}`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
+            const formData = new FormData();
+            formData.append('image', imageFile);
+        
+            try {
+                console.log('Uploading image... user id : ', user?.id);
+                const response = await axios.post(`${PROFILE_API}/upload/image/${user?.id}`, formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                });
+        
+                if (response.status === 200) {
+                    // The image was uploaded successfully
+                    // The response data is the updated profile
+                    const profile = response.data;
+                    console.log('Profile:', profile);
+                } else {
+                    // The server responded with a status other than 200
+                    console.error('Error uploading image:', response);
                 }
-            });
-    
-            if (response.status === 200) {
-                // The image was uploaded successfully
-                // The response data is the updated profile
-                const profile = response.data;
-                console.log('Profile:', profile);
-            } else {
-                // The server responded with a status other than 200
-                console.error('Error uploading image:', response);
+            } catch (error) {
+                // An error occurred while uploading the image
+                console.error('Error uploading image:', error);
             }
-        } catch (error) {
-            // An error occurred while uploading the image
-            console.error('Error uploading image:', error);
-        }
     };
 
     const downloadProfileImage = async (userId) => {
