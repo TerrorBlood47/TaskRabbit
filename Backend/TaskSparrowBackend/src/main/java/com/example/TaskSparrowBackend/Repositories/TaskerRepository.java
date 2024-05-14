@@ -19,4 +19,7 @@ public interface TaskerRepository extends JpaRepository< Tasker, Integer> {
 	
 	@Query("SELECT t FROM Tasker t WHERE t.userId = ?1")
 	public Tasker findByUserId( Integer userId );
+	
+	@Query("SELECT t FROM Tasker t WHERE t.role = ?1 AND t.area = ?2")
+	public List< Tasker> findByRoleAndArea( String role, String area );
 }

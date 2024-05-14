@@ -49,6 +49,23 @@ public class TaskerController {
 	}
 	
 	
+	@GetMapping("/all")
+	public ResponseEntity<?> findTaskerByRoleHandler( @RequestParam("role") String role,
+	                                                  @RequestParam(name = "area", required = false) String area ){
+		System.out.println("role" + role);
+		System.out.println("areas" + role);
+		
+		if(area==null || area.isEmpty() || area.isBlank() || area.equals("")){
+			List< Tasker > taskers = taskerService.findTaskerByRole(role);
+			return ResponseEntity.ok(taskers);
+		}
+		
+		List<Tasker> taskers = taskerRepository.findByRoleAndArea(role, area);
+		
+		System.out.println("tasker "+taskers);
+		return ResponseEntity.ok(taskers);
+	}
+	
 	@GetMapping("/role/{role}")
 	public ResponseEntity<?> findTaskerByRoleHandler( @PathVariable("role") String role){
 		System.out.println("role" + role);

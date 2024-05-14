@@ -97,8 +97,9 @@ const ProfilePage = () => {
                     let role = response.data.taskerRole;
 
                     console.log("role : ", role);
+                    console.log("area : ", area);
 
-                    fetch(`${TASKER_API}/role/${role}`)
+                    fetch(`${TASKER_API}/all?role=${role}&area=${area}`)
                         .then(response => response.json())
                         .then(data => {
                             console.log("available taskers : ", data)
@@ -430,7 +431,7 @@ const ProfilePage = () => {
                         <div className="my-5">
                             <div class="flex">
                                 <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
-                                    <p>Address</p>
+                                    <p>Email</p>
                                 </span>
                                 <input
                                     variant="standard"
@@ -446,7 +447,7 @@ const ProfilePage = () => {
                         <div className="my-5">
                             <div class="flex">
                                 <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border rounded-e-0 border-gray-300 border-e-0 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
-                                    <p>Email</p>
+                                    <p>Address</p>
                                 </span>
                                 <input
                                     variant="standard"
@@ -548,7 +549,7 @@ const ProfilePage = () => {
                         {Array.isArray(acceptedTasks) && acceptedTasks.map((task, index) => (
                             <div key={index} className={`m-3 ${index % 2 === 0 ? 'bg-gray-300' : 'bg-white'} p-5 rounded-lg hover:scale-105`}>
                                 <h2 className="text-xl font-semibold">{task?.title}</h2>
-                                <p className="text-gray-700">{task?.description}</p>
+                                <p className="text-black-700">{task?.description}</p>
                                 <div className="grid grid-cols-2 gap-2 mt-2">
                                     <p><span className="font-semibold">Wage:</span> {task?.wage}</p>
                                     <p><span className="font-semibold">Area:</span> {task?.area}</p>
@@ -606,8 +607,8 @@ const ProfilePage = () => {
                         <div className="relative z-0 w-full mb-5 group text">
                             <select placeholder=' ' value={taskerRole} onChange={(e) => setTaskerRole(e.target.value)} className="text-center block py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer" required>
                                 <option value='' selected>Select Tasker Role</option>
-                                <option value='Cleaning'>Cleaner</option>
-                                <option value='Plumbing'>Plumber</option>
+                                <option value='Cleaner'>Cleaner</option>
+                                <option value='Plumber'>Plumber</option>
                                 <option value='Electrician'>Electrician</option>
                             </select>
                         </div>
@@ -622,6 +623,7 @@ const ProfilePage = () => {
                                 <option value='Uttara'>Uttara</option>
                                 <option value='Dhanmondi'>Dhanmondi</option>
                                 <option value='Rajarbagh'>Rajarbagh</option>
+                                <option value='Motijheel'>Motijheel</option>
                             </select>
                         </div>
 
