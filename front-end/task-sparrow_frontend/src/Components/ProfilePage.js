@@ -153,11 +153,11 @@ const ProfilePage = () => {
             .then(response => response.json())
             .then(data => {
                 console.log("Data : ", data);
-                setName(user.name || 'John Doe');
+                setName(user.name || '');
                 setEmail(user.email);
-                setProfession(data.profession || 'Software Engineer');
-                setContact(data.contact || '+1 234 567 890');
-                setLocation(data.address || 'New York, USA');
+                setProfession(data.profession || '');
+                setContact(data.contact || '');
+                setLocation(data.address || '');
                 setSelectedFile(data.profileImage || null);
                 
                 if (data.profileImage) {
@@ -295,6 +295,15 @@ const ProfilePage = () => {
 
     const handleProfileUpdate = async () => {
 
+        if (!user) {
+            return;
+        }
+
+        if (!name || !contact || !profession || !location || !selectedFile) {
+            alert('Please fill all the fields');
+            return;
+        }
+
         try {
             const formData = new FormData();
             formData.append('userId', user?.id);
@@ -373,6 +382,7 @@ const ProfilePage = () => {
                                     label = "Standard"
                                     className='text-center text-lg text-white bg-transparent bd=1w-full border-b border-gray-700 focus:border-gray-300 px-2 outline-none'
                                     value={name}
+                                    placeholder='Name'
                                     onChange={(e) => setName(e.target.value)}
                                 />
                             </div>
@@ -388,6 +398,7 @@ const ProfilePage = () => {
                                     label = "Standard"
                                     className='text-center text-lg text-white bg-transparent bd=1w-full border-b border-gray-700 focus:border-gray-300 px-2 outline-none'
                                     value={profession}
+                                    placeholder='Profession'
                                     onChange={(e) => setProfession(e.target.value)}
                                 />
                             </div>
@@ -403,6 +414,7 @@ const ProfilePage = () => {
                                     label = "Standard"
                                     className='text-center text-lg text-white bg-transparent bd=1w-full border-b border-gray-700 focus:border-gray-300 px-2 outline-none'
                                     value={contact}
+                                    placeholder='Contact'
                                     onChange={(e) => setContact(e.target.value)}
                                 />
                             </div>
@@ -418,6 +430,7 @@ const ProfilePage = () => {
                                     label = "Standard"
                                     className='text-center text-lg text-white bg-transparent bd=1w-full border-b border-gray-700 focus:border-gray-300 px-2 outline-none'
                                     value={email}
+                                    placeholder='Email'
                                     readOnly
                                 />
                             </div>
@@ -433,6 +446,7 @@ const ProfilePage = () => {
                                     label = "Standard"
                                     className='text-center text-lg text-white bg-transparent bd=1w-full border-b border-gray-700 focus:border-gray-300 px-2 outline-none'
                                     value={location}
+                                    placeholder='Location'
                                     onChange={(e) => setLocation(e.target.value)}
                                 />
                             </div>
