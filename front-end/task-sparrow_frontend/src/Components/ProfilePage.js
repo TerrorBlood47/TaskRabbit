@@ -31,6 +31,7 @@ const ProfilePage = () => {
     const [email, setEmail] = useState(user ? user.email : 'johndoe@example.com');
     const [location, setLocation] = useState('New York, USA');
     const [selectedFile, setSelectedFile] = useState(null);
+    const [imgSrc, setImgSrc] = useState('https://cdn.pixabay.com/photo/2016/11/14/04/57/woman-1822656_960_720.jpg');
     const [taskerId, setTaskerId] = useState(null);
 
 
@@ -107,21 +108,6 @@ const ProfilePage = () => {
 
 
 
-                    // Clear the form
-                    // setTask({
-                    //     taskId : null,
-                    //     title: '',
-                    //     description: '',
-                    //     userId: user?.id,
-                    //     taskerId: '',
-                    //     taskerRole: '',
-                    //     wage: 0,
-                    //     area: '',
-                    //     date: '',
-                    //     time_of_the_day: '',
-                    //     duration: 0,
-                    //     status: 'PENDING'
-                    // });
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -173,6 +159,10 @@ const ProfilePage = () => {
                 setContact(data.contact || '+1 234 567 890');
                 setLocation(data.address || 'New York, USA');
                 setSelectedFile(data.profileImage || null);
+                
+                if (data.profileImage) {
+                    downloadProfileImage(user?.id);
+                }
 
             })
             .catch(error => console.error(error));
@@ -229,6 +219,50 @@ const ProfilePage = () => {
     }
 
 
+    const uploadProfileImage = async (imageFile) => {
+        const formData = new FormData();
+        formData.append('image', imageFile);
+    
+        try {
+            console.log('Uploading image... user id : ', user?.id);
+            const response = await axios.post(`${PROFILE_API}/upload/image/${user?.id}`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+    
+            if (response.status === 200) {
+                // The image was uploaded successfully
+                // The response data is the updated profile
+                const profile = response.data;
+                console.log('Profile:', profile);
+            } else {
+                // The server responded with a status other than 200
+                console.error('Error uploading image:', response);
+            }
+        } catch (error) {
+            // An error occurred while uploading the image
+            console.error('Error uploading image:', error);
+        }
+    };
+
+    const downloadProfileImage = async (userId) => {
+        try {
+            const response = await fetch(`${PROFILE_API}/download/image/${userId}`);
+    
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+    
+            const blob = await response.blob();
+            const imageUrl = URL.createObjectURL(blob);
+            setImgSrc(imageUrl);
+        } catch (error) {
+            console.error('Error downloading image:', error);
+        }
+    };
+
+
     const handleLogout = () => {
 
         setUser(null);
@@ -237,7 +271,10 @@ const ProfilePage = () => {
         navigate('/');
     };
 
-    const [imgSrc, setImgSrc] = useState('https://cdn.pixabay.com/photo/2016/11/14/04/57/woman-1822656_960_720.jpg');
+
+    //image set
+
+    
 
     const handleImageChange = (event) => {
         const file = event.target.files[0];
@@ -262,8 +299,6 @@ const ProfilePage = () => {
             const formData = new FormData();
             formData.append('userId', user?.id);
             formData.append('isTasker', false);
-            formData.append('contentType', selectedFile?.type);
-            formData.append('profileImage', selectedFile);
             formData.append('contact', contact);
             formData.append('profession', profession);
             formData.append('address', location);
@@ -280,6 +315,10 @@ const ProfilePage = () => {
             if (!profile_response.ok) {
                 const message = await profile_response.text();
                 throw new Error(`HTTP error! status: ${profile_response.status}, message: ${message}`);
+            }
+
+            if (selectedFile) {
+                uploadProfileImage(selectedFile);
             }
 
             const profile = await profile_response.json();

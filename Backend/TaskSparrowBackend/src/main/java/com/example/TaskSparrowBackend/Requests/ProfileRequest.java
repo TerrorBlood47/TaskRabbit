@@ -13,10 +13,6 @@ public class ProfileRequest {
 	
 	private Boolean isTasker;
 	
-	private String contentType;
-	
-	private byte[] profileImage;
-	
 	private Integer contact;
 	
 	private String profession;

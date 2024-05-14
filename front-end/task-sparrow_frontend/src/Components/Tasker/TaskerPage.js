@@ -15,6 +15,7 @@ import pfp from '../../Assets/zisan.jpg';
 
 const TASKER_API = "http://localhost:8080/api/tasker";
 const TASK_API = "http://localhost:8080/api/task";
+const PROFILE_API = "http://localhost:8080/api/user/profile";
 
 
 const TaskerPage = () => {
@@ -29,6 +30,7 @@ const TaskerPage = () => {
     const [role, setRole] = useState('');
     const [minWagePerHour, setMinWagePerHour] = useState(0);
     const [phone, setPhone] = useState('');
+    const [imgSrc, setImgSrc] = useState('');
 
 
     const [aboutClicked, setAboutClicked] = useState(false);
@@ -75,6 +77,8 @@ const TaskerPage = () => {
                     setMinWagePerHour(tasker.minWagePerHour);
                     setPhone(tasker.phoneNumber);
 
+                    downloadProfileImage(user?.id);
+
                     console.log("TaskerId 32112 : ", tasker.tasker_id);
                     // Fetch tasks right after taskerId is updated
                     if (tasker.tasker_id) {
@@ -99,6 +103,22 @@ const TaskerPage = () => {
         }
     }, [user]);
 
+
+    const downloadProfileImage = async (userId) => {
+        try {
+            const response = await fetch(`${PROFILE_API}/download/image/${userId}`);
+    
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+    
+            const blob = await response.blob();
+            const imageUrl = URL.createObjectURL(blob);
+            setImgSrc(imageUrl);
+        } catch (error) {
+            console.error('Error downloading image:', error);
+        }
+    };
 
 
     const [name, setName] = useState(user ? user.name : 'John Doe');
@@ -174,7 +194,7 @@ const TaskerPage = () => {
                 <div className=' h-auto w-auto overflow-hidden'>
                     <img
                         className='w-17 h-17 rounded-full  p-2 top-5 left-2 bottom-5'
-                        src={pfp}
+                        src={imgSrc}
                         alt='Profile'
                     />
                     <p className='text-20 font-calibari text-gray-200  hover:text-black cursor-pointer py-5 transform transition-transform hover:scale-105' 

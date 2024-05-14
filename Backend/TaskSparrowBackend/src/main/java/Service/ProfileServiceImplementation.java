@@ -32,8 +32,6 @@ public class ProfileServiceImplementation implements ProfileService{
 			Profile profile = opt.get();
 			
 			profile.setIsTasker(req.getIsTasker());
-			profile.setContentType(req.getContentType());
-			profile.setProfileImage(req.getProfileImage());
 			profile.setContact(req.getContact());
 			profile.setProfession(req.getProfession());
 			profile.setAddress(req.getAddress());

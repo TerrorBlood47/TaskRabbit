@@ -12,7 +12,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.sql.Timestamp;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -30,11 +33,11 @@ public class ProfileController {
 	@Autowired
 	private ModelMapper modelMapper;
 	
+	private final String ProfileImageFolder = "C:\\Users\\azmai\\OneDrive\\Documents\\Swe Project\\TaskSparrow\\Backend\\TaskSparrowBackend\\src\\main\\java\\com\\example\\TaskSparrowBackend\\Profile";
+	
 	@PostMapping("/update")
 	public ResponseEntity< ? > updateProfileHandler( @RequestParam("userId") Integer userId,
 	                                         @RequestParam(value = "isTasker",required = false) Boolean isTasker,
-	                                         @RequestParam(value = "contentType", required = false) String contentType,
-	                                         @RequestParam(value = "profileImage", required = false) MultipartFile profileImage,
 	                                         @RequestParam(value = "contact", required = false) Integer contact,
 	                                         @RequestParam(value = "profession",required = false) String profession,
 	                                         @RequestParam(value = "address",required = false) String address,
@@ -47,9 +50,6 @@ public class ProfileController {
 			Profile profile = opt.get();
 			
 			profile.setIsTasker(isTasker? isTasker : profile.getIsTasker());
-			profile.setContentType(contentType.length() > 0? contentType : profile.getContentType());
-			profile.setProfileImage(profileImage != null && profileImage.getSize()>0?
-					ImageUitls.compressImage(profileImage.getBytes()) : profile.getProfileImage());
 			profile.setContact(contact!=null ? contact : profile.getContact());
 			profile.setProfession(profession!=null ? profession : profile.getProfession());
 			profile.setAddress(address!=null ? address : profile.getAddress());
@@ -58,7 +58,6 @@ public class ProfileController {
 			
 			profile = profileRepo.save(profile);
 			
-			profile.setProfileImage(ImageUitls.decompressImage(profile.getProfileImage()));
 			
 			return ResponseEntity.ok(profile);
 		}
@@ -70,8 +69,6 @@ public class ProfileController {
 	@PostMapping("/create")
 	public ResponseEntity< ? > createProfileHandler( @RequestParam("userId") Integer userId,
 	                                         @RequestParam(value = "isTasker", required = false) Boolean isTasker,
-	                                         @RequestParam(value = "contentType",required = false) String contentType,
-	                                         @RequestParam(value = "profileImage",required = false) MultipartFile profileImage,
 	                                         @RequestParam(value = "contact",required = false) Integer contact,
 	                                         @RequestParam(value = "profession",required = false) String profession,
 	                                         @RequestParam(value = "address",required = false) String address,
@@ -86,8 +83,6 @@ public class ProfileController {
 		
 		Profile profile = Profile.builder()
 				.isTasker(isTasker)
-				.contentType(contentType)
-				.profileImage(profileImage != null ? ImageUitls.compressImage(profileImage.getBytes()) : null)
 				.contact(contact)
 				.profession(profession)
 				.address(address)
@@ -97,8 +92,6 @@ public class ProfileController {
 				.build();
 		
 		profile = profileRepo.save(profile);
-		
-		profile.setProfileImage(ImageUitls.decompressImage(profile.getProfileImage()));
 		
 		return ResponseEntity.ok(profile);
 	
@@ -111,10 +104,62 @@ public class ProfileController {
 		
 		if ( opt.isPresent() ){
 			Profile profile = opt.get();
-			profile.setProfileImage(ImageUitls.decompressImage(profile.getProfileImage()));
+			
 			return ResponseEntity.ok(profile);
 		}
 		
 		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Profile not found");
 	}
+	
+	
+	@PostMapping(path = "/upload/image/{userId}", consumes ={MediaType.APPLICATION_JSON_VALUE ,MediaType.MULTIPART_FORM_DATA_VALUE})
+	public ResponseEntity< ? > uploadProfileImageHandler( @PathVariable Integer userId,
+	                                             @RequestParam("image") MultipartFile image) throws IOException {
+		
+		Optional<Profile> opt = profileRepo.findByUserId(userId);
+		
+		if ( opt.isEmpty() ){
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Profile not found");
+		}
+		
+		Profile profile = opt.get();
+		
+		//String imageName = UUID.randomUUID().toString();
+		String imagePath = ProfileImageFolder + "\\" + System.currentTimeMillis()+"_"+image.getOriginalFilename();
+		
+		System.out.println("Image Path: " + imagePath) ;
+		
+		image.transferTo(new File(imagePath));
+		
+		profile.setProfileImage(imagePath);
+		
+		profile = profileRepo.save(profile);
+		
+		return ResponseEntity.ok(profile);
+	}
+	
+	
+	
+	@GetMapping("/download/image/{userId}")
+	public ResponseEntity<?> downloadProfileImageHandler( @PathVariable Integer userId ) throws IOException {
+		
+		Optional<Profile> opt = profileRepo.findByUserId(userId);
+		
+		if ( opt.isEmpty() ){
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Profile not found");
+		}
+		
+		Profile profile = opt.get();
+		
+		String path = profile.getProfileImage();
+		
+		byte[] image = Files.readAllBytes(new File(path).toPath());
+		
+		return ResponseEntity.ok()
+				.contentType(MediaType.IMAGE_JPEG)
+				.body(image);
+		
+		
+	}
+	
 }

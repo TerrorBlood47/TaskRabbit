@@ -23,12 +23,7 @@ public class Profile {
 	@Column(name = "is_tasker")
 	private Boolean isTasker;
 	
-	@Column(name = "type")
-	private String contentType;
-	
-	@Lob
-	@Column(name = "profile_image",nullable = true)
-	private byte[] profileImage;
+	private String profileImage;
 	
 	private Integer contact;
 	
