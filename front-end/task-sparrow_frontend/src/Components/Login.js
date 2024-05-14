@@ -5,6 +5,7 @@ import logo from '../Assets/logo.png'
 import { useNavigate } from 'react-router-dom';
 import UserContext from './Context/UserContext';
 
+
 const API = "http://localhost:8080/api/auth";
 
 const Login = () => {
@@ -12,12 +13,17 @@ const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+
+
     const { setUser } = useContext(UserContext);
 
     const [passwordVisible, setPasswordVisible] = useState(false);
     const togglePasswordVisibility = () => {
         setPasswordVisible(!passwordVisible);
     };
+
+
+
 
 
     const handleLogin = async () => {
@@ -52,7 +58,7 @@ const Login = () => {
 
     return (
 
-        <div class="font-[sans-serif] text-[#333] bg-white flex items-center justify-center md:h-screen p-4">
+        <div id='root' class="font-[sans-serif] text-[#333] bg-white flex items-center justify-center md:h-screen p-4">
             <div class="shadow-[0_2px_16px_-3px_rgba(6,81,237,0.3)] max-w-6xl rounded-md p-6">
                 <a href="javascript:void(0)"><img
                     src={logo} alt="logo" class='w-40 md:mb-4 mb-12' />

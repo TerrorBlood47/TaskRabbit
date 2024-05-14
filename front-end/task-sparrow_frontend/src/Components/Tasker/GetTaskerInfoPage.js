@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { useState } from 'react'
 import UserContext from '../Context/UserContext'
 import axios from 'axios';
@@ -25,6 +25,15 @@ const GetTaskerInfoPage = () => {
     const handleHomeNavigation = () => {
         navigate('/');
     }
+
+
+    useEffect(() => {
+        if (!user) {
+            alert('Please login first');
+            navigate('/login');
+            return;
+        }
+    }, []);
 
     const addTaskerInfo = async () => {
 

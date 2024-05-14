@@ -149,6 +149,13 @@ const ProfilePage = () => {
 
 
     useEffect(() => {
+
+        if (!user) {
+            navigate('/login');
+            return;
+        }
+
+
         fetch(`${PROFILE_API}/get/${user?.id}`, { method: 'GET' })
             .then(response => response.json())
             .then(data => {

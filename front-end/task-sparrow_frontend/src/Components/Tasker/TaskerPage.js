@@ -4,7 +4,7 @@ import UserContext from '../Context/UserContext';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import {
-	faHome,
+    faHome,
 } from "@fortawesome/free-solid-svg-icons";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
@@ -34,11 +34,11 @@ const TaskerPage = () => {
 
 
     const [aboutClicked, setAboutClicked] = useState(false);
-	const handleAboutNavigation = () => {
-		setAboutClicked(false);
+    const handleAboutNavigation = () => {
+        setAboutClicked(false);
         setTaskOffersClicked(true);
         setAcceptedTask(true);
-	}
+    }
 
     const [taskoffersClicked, setTaskOffersClicked] = useState(true);
     const handleTaskOffersNavigation = () => {
@@ -65,6 +65,14 @@ const TaskerPage = () => {
 
 
     useEffect(() => {
+
+        if (!user) {
+
+            alert('Please login first');
+            navigate('/login');
+            return;
+        }
+
         if (user && user.id) {
             fetch(`${TASKER_API}/userId/${user.id}`)
                 .then(response => response.json())
@@ -107,11 +115,11 @@ const TaskerPage = () => {
     const downloadProfileImage = async (userId) => {
         try {
             const response = await fetch(`${PROFILE_API}/download/image/${userId}`);
-    
+
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
-    
+
             const blob = await response.blob();
             const imageUrl = URL.createObjectURL(blob);
             setImgSrc(imageUrl);
@@ -145,12 +153,12 @@ const TaskerPage = () => {
                 setTasks(tasks => tasks.filter(task => task.taskId !== taskId));
 
                 fetch(`${TASK_API}/find/accepted/${taskerId}`)
-                            .then(response => response.json())
-                            .then(data => {
-                                console.log(data)
-                                setAcceptedTasks(data)
-                            })
-                            .catch(error => console.error(error));
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data)
+                        setAcceptedTasks(data)
+                    })
+                    .catch(error => console.error(error));
 
             }
 
@@ -197,34 +205,34 @@ const TaskerPage = () => {
                         src={imgSrc}
                         alt='Profile'
                     />
-                    <p className='text-20 font-calibari text-gray-200  hover:text-black cursor-pointer py-5 transform transition-transform hover:scale-105' 
+                    <p className='text-20 font-calibari text-gray-200  hover:text-black cursor-pointer py-5 transform transition-transform hover:scale-105'
                         onClick={handleAboutNavigation}>
                         About
                     </p>
 
-                    <p className='text-20 font-calibari text-gray-200  hover:text-black cursor-pointer py-5 transform transition-transform hover:scale-105' 
+                    <p className='text-20 font-calibari text-gray-200  hover:text-black cursor-pointer py-5 transform transition-transform hover:scale-105'
                         onClick={handleTaskOffersNavigation}>
                         Task Offers
                     </p>
 
-                    <p className='text-20 font-calibari text-gray-200  hover:text-black cursor-pointer py-5 transform transition-transform hover:scale-105' 
+                    <p className='text-20 font-calibari text-gray-200  hover:text-black cursor-pointer py-5 transform transition-transform hover:scale-105'
                         onClick={handleAcceptedTasksNavigation}>
                         Accepted Tasks
                     </p>
 
-                    <p className='text-20 font-calibari text-gray-200  hover:text-black cursor-pointer py-5 transform transition-transform hover:scale-105' 
+                    <p className='text-20 font-calibari text-gray-200  hover:text-black cursor-pointer py-5 transform transition-transform hover:scale-105'
                         onClick={handleHomeNavigation}>
                         Home
                     </p>
 
-                    <p className='text-20 font-calibari text-gray-200  hover:text-black cursor-pointer py-5 transform transition-transform hover:scale-105' 
+                    <p className='text-20 font-calibari text-gray-200  hover:text-black cursor-pointer py-5 transform transition-transform hover:scale-105'
                         onClick={handleProfileNavigation}>
                         Profile
                     </p>
 
                 </div>
 
-                
+
             </div>
 
             {!aboutClicked && (
@@ -291,7 +299,7 @@ const TaskerPage = () => {
                             Task Offers
                         </h5>
                         {Array.isArray(tasks) && tasks.map((task, index) => (
-                            <div key={index} className={`m-3 ${index % 2 === 0 ? 'bg-gray-300' : 'bg-white'} p-5 rounded-lg hover:scale-105` }>
+                            <div key={index} className={`m-3 ${index % 2 === 0 ? 'bg-gray-300' : 'bg-white'} p-5 rounded-lg hover:scale-105`}>
                                 <h2 className="text-xl font-semibold">{task?.title}</h2>
                                 <p className="text-gray-700">{task?.description}</p>
                                 <div className="grid grid-cols-2 gap-2 mt-2">
@@ -320,7 +328,7 @@ const TaskerPage = () => {
                             Accepted Tasks
                         </h5>
                         {Array.isArray(acceptedTasks) && acceptedTasks.map((task, index) => (
-                            <div key={index} className={`m-3 ${index % 2 === 0 ? 'bg-gray-300' : 'bg-white' } hover:scale-105`}>
+                            <div key={index} className={`m-3 ${index % 2 === 0 ? 'bg-gray-300' : 'bg-white'} hover:scale-105`}>
                                 <h2 className="text-xl font-semibold">{task?.title}</h2>
                                 <p className="text-gray-700">{task?.description}</p>
                                 <div className="grid grid-cols-2 gap-2">
