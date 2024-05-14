@@ -257,30 +257,30 @@ const TaskerPage = () => {
             )}
 
             {!taskoffersClicked && (
-                <div className=' w-[80%] h-[95%] m-2 bg-white rounded-xl'>
-                    <div className=' overflow-y-scroll border  h-[100%]'>
+                <div className=' w-[80%] h-[95%] m-2 bg-white rounded-xl '>
+                    <div className=' overflow-y-scroll border  h-[100%] '>
                         <h5 class=" text-3xl leading-6 font-medium  text-gray-900">
                             Task Offers
                         </h5>
                         {Array.isArray(tasks) && tasks.map((task, index) => (
-                            <div key={index} className=' m-3 bg-white'>
-                                {console.log(task)}
-                                <h2>{task?.title}</h2>
-                                <p>{task?.description}</p>
-                                <p>{task?.wage}</p>
-                                <p>{task?.area}</p>
-                                <p>{task?.date}</p>
-                                <p>{task?.time_of_the_day}</p>
-                                <p>{task?.duration}</p>
-                                <p>{task?.status}</p>
-
-                                <button onClick={() => handleAccept(task.taskId)} data-modal-hide="static-modal" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Accept</button>
-                                <button onClick={() => handleReject(task.taskId)} data-modal-hide="static-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Decline</button>
-
-                                {/* <button className=' bg-green-400 m-1' onClick={() => handleAccept(task.taskId)}>Accept</button>
-                                <button className=' bg-red-500 m-1' onClick={() => handleReject(task.taskId)}>Reject</button> */}
+                            <div key={index} className={`m-3 ${index % 2 === 0 ? 'bg-gray-300' : 'bg-white'} p-5 rounded-lg hover:scale-105` }>
+                                <h2 className="text-xl font-semibold">{task?.title}</h2>
+                                <p className="text-gray-700">{task?.description}</p>
+                                <div className="grid grid-cols-2 gap-2 mt-2">
+                                    <p><span className="font-semibold">Wage:</span> {task?.wage}</p>
+                                    <p><span className="font-semibold">Area:</span> {task?.area}</p>
+                                    <p><span className="font-semibold">Date:</span> {task?.date}</p>
+                                    <p><span className="font-semibold">Time of the Day:</span> {task?.time_of_the_day}</p>
+                                    <p><span className="font-semibold">Duration:</span> {task?.duration}</p>
+                                    <p><span className="font-semibold">Status:</span> {task?.status}</p>
+                                </div>
+                                <div className="mt-4">
+                                    <button onClick={() => handleAccept(task.taskId)} className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-3 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Accept</button>
+                                    <button onClick={() => handleReject(task.taskId)} className="py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Decline</button>
+                                </div>
                             </div>
                         ))}
+
                     </div>
                 </div>
             )}
@@ -292,17 +292,17 @@ const TaskerPage = () => {
                             Accepted Tasks
                         </h5>
                         {Array.isArray(acceptedTasks) && acceptedTasks.map((task, index) => (
-                            <div key={index} className=' m-3 bg-white'>
-                                {console.log(task)}
-                                <h2>{task?.title}</h2>
-                                <p>{task?.description}</p>
-                                <p>{task?.wage}</p>
-                                <p>{task?.area}</p>
-                                <p>{task?.date}</p>
-                                <p>{task?.time_of_the_day}</p>
-                                <p>{task?.duration}</p>
-                                <p>{task?.status}</p>
-
+                            <div key={index} className={`m-3 ${index % 2 === 0 ? 'bg-gray-300' : 'bg-white' } hover:scale-105`}>
+                                <h2 className="text-xl font-semibold">{task?.title}</h2>
+                                <p className="text-gray-700">{task?.description}</p>
+                                <div className="grid grid-cols-2 gap-2">
+                                    <p><span className="font-semibold">Wage:</span> {task?.wage}</p>
+                                    <p><span className="font-semibold">Area:</span> {task?.area}</p>
+                                    <p><span className="font-semibold">Date:</span> {task?.date}</p>
+                                    <p><span className="font-semibold">Time of the Day:</span> {task?.time_of_the_day}</p>
+                                    <p><span className="font-semibold">Duration:</span> {task?.duration}</p>
+                                    <p><span className="font-semibold">Status:</span> {task?.status}</p>
+                                </div>
                             </div>
                         ))}
                     </div>

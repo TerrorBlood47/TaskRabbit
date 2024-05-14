@@ -48,7 +48,7 @@ const HomePage = () => {
 		setReviewClicked(true);
 	}
 
-	const [ReviewClicked, setReviewClicked] = useState(false)
+	const [ReviewClicked, setReviewClicked] = useState(true)
 	const handleReviewNavigation = () => {
 		setReviewClicked(false);
 		setAboutClicked(true);

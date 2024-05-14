@@ -119,8 +119,8 @@ const GetTaskerInfoPage = () => {
                                     border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
                                 onChange={(e) => setRole(e.target.value)}>
                                 <option value='' selected>Select your category</option>
-                                <option value='Cleaning'>Cleaning</option>
-                                <option value='Plumbing'>Plumbing</option>
+                                <option value='Cleaning'>Cleaner</option>
+                                <option value='Plumbing'>Plumber</option>
                                 <option value='Electrician'>Electrician</option>
                             </select>
                         </div>
