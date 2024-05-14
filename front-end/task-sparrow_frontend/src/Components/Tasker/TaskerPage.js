@@ -57,6 +57,9 @@ const TaskerPage = () => {
     const handleHomeNavigation = () => {
         navigate('/');
     }
+    const handleProfileNavigation = () => {
+        navigate('/profile');
+    }
 
 
     useEffect(() => {
@@ -192,6 +195,11 @@ const TaskerPage = () => {
                     <p className='text-20 font-calibari text-gray-200  hover:text-black cursor-pointer py-5 transform transition-transform hover:scale-105' 
                         onClick={handleHomeNavigation}>
                         Home
+                    </p>
+
+                    <p className='text-20 font-calibari text-gray-200  hover:text-black cursor-pointer py-5 transform transition-transform hover:scale-105' 
+                        onClick={handleProfileNavigation}>
+                        Profile
                     </p>
 
                 </div>

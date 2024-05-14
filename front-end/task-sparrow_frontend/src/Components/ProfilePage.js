@@ -423,7 +423,7 @@ const ProfilePage = () => {
             { !moreClicked && (
             <div className=' w-[80%] h-[95%] m-2 bg-white rounded-xl '>
                 
-                <div className='flex justify-end'>
+                <div className='flex justify-end mb-5'>
                 {
                     !taskerId && (
                         <button
@@ -506,7 +506,7 @@ const ProfilePage = () => {
 
             {!searchClicked && (
             <div className=' w-[80%] h-[95%] m-2 bg-white rounded-xl '>
-                <div className='flex justify-end'>
+                <div className='flex justify-end mb-5'>
                 {
                     !taskerId && (
                         <button
