@@ -31,7 +31,7 @@ const ProfilePage = () => {
     const [email, setEmail] = useState(user ? user.email : '');
     const [location, setLocation] = useState('');
     const [selectedFile, setSelectedFile] = useState(null);
-    const [imgSrc, setImgSrc] = useState('https://cdn.pixabay.com/photo/2016/11/14/04/57/woman-1822656_960_720.jpg');
+    const [imgSrc, setImgSrc] = useState('https://cdn.pixabay.com/photo/2015/04/18/11/03/profile-728591_1280.jpg');
     const [taskerId, setTaskerId] = useState(null);
 
 
@@ -140,6 +140,15 @@ const ProfilePage = () => {
                 setTime_of_the_day('');
                 setDuration(0);
 
+
+                fetch(`${TASK_API}/find/pending/user/${user?.id}`)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data)
+                    setPendingTasks(data)
+                })
+                .catch(error => console.error(error));
+
             })
             .catch(error => {
                 console.error('Error:', error);
@@ -202,7 +211,7 @@ const ProfilePage = () => {
                 })
                 .catch(error => console.error(error));
         }
-    }, [user]); // Dependencies array is here
+    }, []); // Dependencies array is here
 
 
     const handleDeleteTask = async (taskId) => {
