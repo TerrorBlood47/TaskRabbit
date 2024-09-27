@@ -119,6 +119,7 @@ const GetTaskerInfoPage = () => {
                                 <option value='Uttara'>Uttara</option>
                                 <option value='Dhanmondi'>Dhanmondi</option>
                                 <option value='Rajarbagh'>Rajarbagh</option>
+                                <option value='Motijheel'>Motijheel</option>
                             </select>
                         </div>
                         <div className='py-5'>
@@ -128,8 +129,8 @@ const GetTaskerInfoPage = () => {
                                     border-gray-200 appearance-none dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer"
                                 onChange={(e) => setRole(e.target.value)}>
                                 <option value='' selected>Select your category</option>
-                                <option value='Cleaning'>Cleaner</option>
-                                <option value='Plumbing'>Plumber</option>
+                                <option value='Cleaner'>Cleaner</option>
+                                <option value='Plumber'>Plumber</option>
                                 <option value='Electrician'>Electrician</option>
                             </select>
                         </div>

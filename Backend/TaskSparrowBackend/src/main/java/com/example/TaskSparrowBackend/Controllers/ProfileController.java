@@ -32,8 +32,8 @@ public class ProfileController {
 	
 	@Autowired
 	private ModelMapper modelMapper;
-	
-	private final String ProfileImageFolder = "C:\\Users\\azmai\\OneDrive\\Documents\\Swe Project\\TaskSparrow\\Backend\\TaskSparrowBackend\\src\\main\\java\\com\\example\\TaskSparrowBackend\\Profile";
+
+	private final String ProfileImageFolder = "C:\\Users\\Zisan-23\\Desktop\\SWE_Project\\TaskSparrow\\Backend\\TaskSparrowBackend\\src\\main\\java\\com\\example\\TaskSparrowBackend\\Profile";
 	
 	@PostMapping("/update")
 	public ResponseEntity< ? > updateProfileHandler( @RequestParam("userId") Integer userId,
